@@ -38,7 +38,7 @@ Non-interactive switches (handy for demos and for the results in `tests/results/
 ./privilege_tetris --web 9000       # web UI on another port
 ```
 
-Windows / Code::Blocks: the console program has no platform-specific calls: add every file in `src/` except `WebServer.cpp`
+Windows / Code::Blocks: the console program has no platform-specific calls: add every file in `src/`
 to one project (C++17 on), or use MinGW with the same `g++` command the Makefile uses. The web server uses POSIX sockets, so on
 Windows `--web` prints "not available" (the file compiles to a stub there); use WSL to get the web UI.
 
