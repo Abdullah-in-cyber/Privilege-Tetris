@@ -1,0 +1,374 @@
+==============================================================================
+               PRIVILEGE TETRIS - Minimum-Change Repair Engine
+==============================================================================
+  Loaded: Scenario 4 - Multiple Violations
+
+==================== MAIN MENU ====================
+  1. View System Configuration
+  2. View Users and Roles
+  3. View Permission Assignments
+  4. Run Security Audit (linear search)
+  5. Detect Permission Violations
+  6. Generate Repair Candidates
+  7. Find Minimum-Cost Repair (backtracking)
+  8. Simulate Repair (on a copy)
+  9. Validate Repaired Configuration
+ 10. View Audit Logs
+ 11. Generate Security Report
+ 12. Run Predefined Test Scenarios
+ 13. Apply Validated Repair to Live Configuration
+ 14. Edit Configuration (users / roles / permissions)
+ 15. Load / Save Configuration File
+ 16. Settings (cost model, pruning)
+ 17. Linear Search Demo
+  0. Exit
+===================================================
+Choose an option: 
+  EDIT CONFIGURATION
+   1. Add permission        2. Add role            3. Add user
+   4. Give user a role      5. Remove user's role
+   6. Give user a direct permission   7. Revoke user's direct permission
+   8. Delete user           9. Clear everything (empty configuration)
+  10. Make a role inherit from another role (checks for cycles)
+  11. Add a separation-of-duties rule      0. Back
+  Choose:   Permission id (e.g. reports.view):   Description:   Risk weight 1 (harmless) to 10 (critical):   [!] Please enter a whole number between 1 and 10.
+  Risk weight 1 (harmless) to 10 (critical):   [!] Please enter a whole number between 1 and 10.
+  Risk weight 1 (harmless) to 10 (critical):   Added.
+
+  EDIT CONFIGURATION
+   1. Add permission        2. Add role            3. Add user
+   4. Give user a role      5. Remove user's role
+   6. Give user a direct permission   7. Revoke user's direct permission
+   8. Delete user           9. Clear everything (empty configuration)
+  10. Make a role inherit from another role (checks for cycles)
+  11. Add a separation-of-duties rule      0. Back
+  Choose:   Role name:   grants permissions (space separated, blank = none):   allowed permissions (space separated, blank = none):   forbidden permissions (space separated, blank = none):   required permissions (space separated, blank = none):   inherits from roles (blank = none):   [!] Unknown role 'Ghost'. Role not created.
+
+  EDIT CONFIGURATION
+   1. Add permission        2. Add role            3. Add user
+   4. Give user a role      5. Remove user's role
+   6. Give user a direct permission   7. Revoke user's direct permission
+   8. Delete user           9. Clear everything (empty configuration)
+  10. Make a role inherit from another role (checks for cycles)
+  11. Add a separation-of-duties rule      0. Back
+  Choose:   Role name:   grants permissions (space separated, blank = none):   allowed permissions (space separated, blank = none):   forbidden permissions (space separated, blank = none):   required permissions (space separated, blank = none):   inherits from roles (blank = none):   Role added.
+
+  EDIT CONFIGURATION
+   1. Add permission        2. Add role            3. Add user
+   4. Give user a role      5. Remove user's role
+   6. Give user a direct permission   7. Revoke user's direct permission
+   8. Delete user           9. Clear everything (empty configuration)
+  10. Make a role inherit from another role (checks for cycles)
+  11. Add a separation-of-duties rule      0. Back
+  Choose:   Child role (the one that inherits):   Parent role (inherited from):   [!] Rejected: this would create an inheritance cycle: Teacher -> Dean -> Teacher
+
+  EDIT CONFIGURATION
+   1. Add permission        2. Add role            3. Add user
+   4. Give user a role      5. Remove user's role
+   6. Give user a direct permission   7. Revoke user's direct permission
+   8. Delete user           9. Clear everything (empty configuration)
+  10. Make a role inherit from another role (checks for cycles)
+  11. Add a separation-of-duties rule      0. Back
+  Choose:   Child role (the one that inherits):   Parent role (inherited from):   [!] Rejected: a role cannot inherit from itself
+
+  EDIT CONFIGURATION
+   1. Add permission        2. Add role            3. Add user
+   4. Give user a role      5. Remove user's role
+   6. Give user a direct permission   7. Revoke user's direct permission
+   8. Delete user           9. Clear everything (empty configuration)
+  10. Make a role inherit from another role (checks for cycles)
+  11. Add a separation-of-duties rule      0. Back
+  Choose:   Child role (the one that inherits):   Parent role (inherited from):   Admin now inherits Student.
+
+  EDIT CONFIGURATION
+   1. Add permission        2. Add role            3. Add user
+   4. Give user a role      5. Remove user's role
+   6. Give user a direct permission   7. Revoke user's direct permission
+   8. Delete user           9. Clear everything (empty configuration)
+  10. Make a role inherit from another role (checks for cycles)
+  11. Add a separation-of-duties rule      0. Back
+  Choose:   Rule name:   Permissions of which a user may hold at most ONE (at least two):   [!] Unknown permission 'nope'. Rule not created.
+
+  EDIT CONFIGURATION
+   1. Add permission        2. Add role            3. Add user
+   4. Give user a role      5. Remove user's role
+   6. Give user a direct permission   7. Revoke user's direct permission
+   8. Delete user           9. Clear everything (empty configuration)
+  10. Make a role inherit from another role (checks for cycles)
+  11. Add a separation-of-duties rule      0. Back
+  Choose:   Rule name:   Permissions of which a user may hold at most ONE (at least two):   [!] A rule needs at least two different permissions.
+
+  EDIT CONFIGURATION
+   1. Add permission        2. Add role            3. Add user
+   4. Give user a role      5. Remove user's role
+   6. Give user a direct permission   7. Revoke user's direct permission
+   8. Delete user           9. Clear everything (empty configuration)
+  10. Make a role inherit from another role (checks for cycles)
+  11. Add a separation-of-duties rule      0. Back
+  Choose:   Rule name:   Permissions of which a user may hold at most ONE (at least two):   Rule added.
+
+  EDIT CONFIGURATION
+   1. Add permission        2. Add role            3. Add user
+   4. Give user a role      5. Remove user's role
+   6. Give user a direct permission   7. Revoke user's direct permission
+   8. Delete user           9. Clear everything (empty configuration)
+  10. Make a role inherit from another role (checks for cycles)
+  11. Add a separation-of-duties rule      0. Back
+  Choose:   Rule name:   Permissions of which a user may hold at most ONE (at least two):   [!] A rule with that name already exists.
+
+  EDIT CONFIGURATION
+   1. Add permission        2. Add role            3. Add user
+   4. Give user a role      5. Remove user's role
+   6. Give user a direct permission   7. Revoke user's direct permission
+   8. Delete user           9. Clear everything (empty configuration)
+  10. Make a role inherit from another role (checks for cycles)
+  11. Add a separation-of-duties rule      0. Back
+  Choose: 
+==================== MAIN MENU ====================
+  1. View System Configuration
+  2. View Users and Roles
+  3. View Permission Assignments
+  4. Run Security Audit (linear search)
+  5. Detect Permission Violations
+  6. Generate Repair Candidates
+  7. Find Minimum-Cost Repair (backtracking)
+  8. Simulate Repair (on a copy)
+  9. Validate Repaired Configuration
+ 10. View Audit Logs
+ 11. Generate Security Report
+ 12. Run Predefined Test Scenarios
+ 13. Apply Validated Repair to Live Configuration
+ 14. Edit Configuration (users / roles / permissions)
+ 15. Load / Save Configuration File
+ 16. Settings (cost model, pruning)
+ 17. Linear Search Demo
+  0. Exit
+===================================================
+Choose an option: 
+------------------------------------------------------------------------------
+ ROLES AND THEIR POLICY RULES
+------------------------------------------------------------------------------
+  Role Student
+      grants    : {courses.enroll, grades.view}
+      allowed   : {courses.enroll, grades.view}
+      forbidden : {accounts.manage, attendance.mark, grades.edit, system.settings}
+      required  : {grades.view}
+  Role Teacher
+      grants    : {attendance.mark, grades.edit, grades.view}
+      allowed   : {attendance.mark, grades.edit, grades.view}
+      forbidden : {accounts.manage, system.settings}
+      required  : {grades.edit, grades.view}
+  Role Admin
+      inherits  : Student
+      grants    : {accounts.manage, grades.view, logs.read, system.settings}
+      allowed   : {accounts.manage, grades.view, logs.read, system.settings}
+      forbidden : {grades.edit}
+      required  : {accounts.manage}
+      -- with inheritance applied --
+      grants    : {accounts.manage, courses.enroll, grades.view, logs.read, system.settings}
+      allowed   : {accounts.manage, courses.enroll, grades.view, logs.read, system.settings}
+      forbidden : {accounts.manage, attendance.mark, grades.edit, system.settings}
+      required  : {accounts.manage, grades.view}
+  Role Assistant
+      grants    : {grades.view}
+      allowed   : {attendance.mark, grades.view}
+      forbidden : {accounts.manage, grades.edit, system.settings}
+      required  : {attendance.mark, grades.view}
+  Role AttendanceClerk
+      grants    : {attendance.mark}
+      allowed   : {attendance.mark}
+      forbidden : {}
+      required  : {}
+  Role Dean
+      inherits  : Teacher
+      grants    : {reports.view}
+      allowed   : {reports.view}
+      forbidden : {}
+      required  : {}
+      -- with inheritance applied --
+      grants    : {attendance.mark, grades.edit, grades.view, reports.view}
+      allowed   : {attendance.mark, grades.edit, grades.view, reports.view}
+      forbidden : {accounts.manage, system.settings}
+      required  : {grades.edit, grades.view}
+
+------------------------------------------------------------------------------
+ ROLE HIERARCHY (parent -> children)
+------------------------------------------------------------------------------
+  Student
+      +- Admin
+  Teacher
+      +- Dean
+  Assistant
+  AttendanceClerk
+  Topological order (parents first): Student Teacher Assistant AttendanceClerk Admin Dean
+
+------------------------------------------------------------------------------
+ USERS
+------------------------------------------------------------------------------
+  User          Roles                     Direct permissions
+  dave          Assistant                 {accounts.manage, grades.edit}
+  eve           Student                   {grades.edit}
+
+==================== MAIN MENU ====================
+  1. View System Configuration
+  2. View Users and Roles
+  3. View Permission Assignments
+  4. Run Security Audit (linear search)
+  5. Detect Permission Violations
+  6. Generate Repair Candidates
+  7. Find Minimum-Cost Repair (backtracking)
+  8. Simulate Repair (on a copy)
+  9. Validate Repaired Configuration
+ 10. View Audit Logs
+ 11. Generate Security Report
+ 12. Run Predefined Test Scenarios
+ 13. Apply Validated Repair to Live Configuration
+ 14. Edit Configuration (users / roles / permissions)
+ 15. Load / Save Configuration File
+ 16. Settings (cost model, pruning)
+ 17. Linear Search Demo
+  0. Exit
+===================================================
+Choose an option:   Current configuration: Custom configuration
+
+------------------------------------------------------------------------------
+ SYSTEM CONFIGURATION
+------------------------------------------------------------------------------
+  Permissions in catalog : 9
+  Roles                  : 6
+  Users                  : 2
+  Cost model             : Weighted (revoke=1 x risk, grant=1 x risk, remove-role=2, add-role=2)
+  Search mode            : Backtracking WITH pruning
+
+  Permission catalog (risk weight 1-10 scales the cost of revoking/granting):
+    grades.view       risk 1  View student grades
+    grades.edit       risk 3  Edit student grades
+    accounts.manage   risk 5  Create/delete user accounts
+    system.settings   risk 5  Change system-wide settings
+    attendance.mark   risk 1  Mark class attendance
+    courses.enroll    risk 1  Enroll in courses
+    logs.read         risk 2  Read system logs
+    audit.export      risk 3  Export audit data
+    reports.view      risk 7  Report viewer
+
+  Separation-of-duties rules (a user may hold at most ONE of each set):
+    S1                  {accounts.manage, reports.view}
+
+==================== MAIN MENU ====================
+  1. View System Configuration
+  2. View Users and Roles
+  3. View Permission Assignments
+  4. Run Security Audit (linear search)
+  5. Detect Permission Violations
+  6. Generate Repair Candidates
+  7. Find Minimum-Cost Repair (backtracking)
+  8. Simulate Repair (on a copy)
+  9. Validate Repaired Configuration
+ 10. View Audit Logs
+ 11. Generate Security Report
+ 12. Run Predefined Test Scenarios
+ 13. Apply Validated Repair to Live Configuration
+ 14. Edit Configuration (users / roles / permissions)
+ 15. Load / Save Configuration File
+ 16. Settings (cost model, pruning)
+ 17. Linear Search Demo
+  0. Exit
+===================================================
+Choose an option: 
+  1. Load configuration from file
+  2. Save current configuration to file
+  0. Back
+  Choose:   File path (e.g. data/scenario1.txt):   Saved to tests/results/saved_custom.txt
+
+==================== MAIN MENU ====================
+  1. View System Configuration
+  2. View Users and Roles
+  3. View Permission Assignments
+  4. Run Security Audit (linear search)
+  5. Detect Permission Violations
+  6. Generate Repair Candidates
+  7. Find Minimum-Cost Repair (backtracking)
+  8. Simulate Repair (on a copy)
+  9. Validate Repaired Configuration
+ 10. View Audit Logs
+ 11. Generate Security Report
+ 12. Run Predefined Test Scenarios
+ 13. Apply Validated Repair to Live Configuration
+ 14. Edit Configuration (users / roles / permissions)
+ 15. Load / Save Configuration File
+ 16. Settings (cost model, pruning)
+ 17. Linear Search Demo
+  0. Exit
+===================================================
+Choose an option: 
+  1. Load configuration from file
+  2. Save current configuration to file
+  0. Back
+  Choose:   File path (e.g. data/scenario1.txt):   Loaded 2 user(s), 6 role(s).
+
+==================== MAIN MENU ====================
+  1. View System Configuration
+  2. View Users and Roles
+  3. View Permission Assignments
+  4. Run Security Audit (linear search)
+  5. Detect Permission Violations
+  6. Generate Repair Candidates
+  7. Find Minimum-Cost Repair (backtracking)
+  8. Simulate Repair (on a copy)
+  9. Validate Repaired Configuration
+ 10. View Audit Logs
+ 11. Generate Security Report
+ 12. Run Predefined Test Scenarios
+ 13. Apply Validated Repair to Live Configuration
+ 14. Edit Configuration (users / roles / permissions)
+ 15. Load / Save Configuration File
+ 16. Settings (cost model, pruning)
+ 17. Linear Search Demo
+  0. Exit
+===================================================
+Choose an option: 
+------------------------------------------------------------------------------
+ DETECTED SECURITY VIOLATIONS (most severe first)
+------------------------------------------------------------------------------
+   1. [CRITICAL] FORBIDDEN   user 'dave' holds forbidden permission 'accounts.manage' (via direct assignment)
+   2. [CRITICAL] FORBIDDEN   user 'dave' holds forbidden permission 'grades.edit' (via direct assignment)
+   3. [CRITICAL] FORBIDDEN   user 'eve' holds forbidden permission 'grades.edit' (via direct assignment)
+   4. [HIGH    ] ROLE-POLICY role 'Assistant' requires but does not grant 'attendance.mark'
+   5. [HIGH    ] ROLE-POLICY role 'Admin' both REQUIRES and FORBIDS 'accounts.manage'
+   6. [HIGH    ] ROLE-POLICY role 'Admin' grants forbidden 'accounts.manage'
+   7. [HIGH    ] ROLE-POLICY role 'Admin' grants forbidden 'system.settings'
+   8. [MEDIUM  ] MISSING     user 'dave' is missing required permission 'attendance.mark'
+  Total: 8 finding(s)
+
+------------------------------------------------------------------------------
+ COMPLIANCE SCORE (0-100)
+------------------------------------------------------------------------------
+  Scoring: every user starts at 100; CRITICAL -25, HIGH -15, MEDIUM -8, LOW -3 per violation.
+
+  User            Violations  Before    
+  dave            3           42        
+  eve             1           75        
+
+  SYSTEM SCORE BEFORE: 58.5 / 100  [HIGH RISK]
+
+==================== MAIN MENU ====================
+  1. View System Configuration
+  2. View Users and Roles
+  3. View Permission Assignments
+  4. Run Security Audit (linear search)
+  5. Detect Permission Violations
+  6. Generate Repair Candidates
+  7. Find Minimum-Cost Repair (backtracking)
+  8. Simulate Repair (on a copy)
+  9. Validate Repaired Configuration
+ 10. View Audit Logs
+ 11. Generate Security Report
+ 12. Run Predefined Test Scenarios
+ 13. Apply Validated Repair to Live Configuration
+ 14. Edit Configuration (users / roles / permissions)
+ 15. Load / Save Configuration File
+ 16. Settings (cost model, pruning)
+ 17. Linear Search Demo
+  0. Exit
+===================================================
+Choose an option: Goodbye.

@@ -1,0 +1,169 @@
+
+SCENARIO 8: Role Hierarchy (inherited rules)
+  HeadTeacher inherits Teacher. 'hana' holds accounts.manage, which is forbidden only through the INHERITED Teacher rule.
+  Expected: Resolve inheritance, detect the forbidden permission, revoke it (cost 5); hugo is clean and keeps inherited teaching access.
+==============================================================================
+                   PRIVILEGE TETRIS - SECURITY AUDIT REPORT
+==============================================================================
+
+------------------------------------------------------------------------------
+ SYSTEM CONFIGURATION
+------------------------------------------------------------------------------
+  Permissions in catalog : 8
+  Roles                  : 4
+  Users                  : 2
+  Cost model             : Weighted (revoke=1 x risk, grant=1 x risk, remove-role=2, add-role=2)
+  Search mode            : Backtracking WITH pruning
+
+  Permission catalog (risk weight 1-10 scales the cost of revoking/granting):
+    grades.view       risk 1  View student grades
+    grades.edit       risk 3  Edit student grades
+    accounts.manage   risk 5  Create/delete user accounts
+    system.settings   risk 5  Change system-wide settings
+    attendance.mark   risk 1  Mark class attendance
+    courses.enroll    risk 1  Enroll in courses
+    logs.read         risk 2  Read system logs
+    audit.export      risk 3  Export audit data
+
+  Separation-of-duties rules (a user may hold at most ONE of each set):
+    (none)
+
+------------------------------------------------------------------------------
+ ROLES AND THEIR POLICY RULES
+------------------------------------------------------------------------------
+  Role Student
+      grants    : {courses.enroll, grades.view}
+      allowed   : {courses.enroll, grades.view}
+      forbidden : {accounts.manage, attendance.mark, grades.edit, system.settings}
+      required  : {grades.view}
+  Role Teacher
+      grants    : {attendance.mark, grades.edit, grades.view}
+      allowed   : {attendance.mark, grades.edit, grades.view}
+      forbidden : {accounts.manage, system.settings}
+      required  : {grades.edit, grades.view}
+  Role Admin
+      grants    : {accounts.manage, grades.view, logs.read, system.settings}
+      allowed   : {accounts.manage, grades.view, logs.read, system.settings}
+      forbidden : {grades.edit}
+      required  : {accounts.manage}
+  Role HeadTeacher
+      inherits  : Teacher
+      grants    : {logs.read}
+      allowed   : {logs.read}
+      forbidden : {}
+      required  : {}
+      -- with inheritance applied --
+      grants    : {attendance.mark, grades.edit, grades.view, logs.read}
+      allowed   : {attendance.mark, grades.edit, grades.view, logs.read}
+      forbidden : {accounts.manage, system.settings}
+      required  : {grades.edit, grades.view}
+
+------------------------------------------------------------------------------
+ ROLE HIERARCHY (parent -> children)
+------------------------------------------------------------------------------
+  Student
+  Teacher
+      +- HeadTeacher
+  Admin
+  Topological order (parents first): Student Teacher Admin HeadTeacher
+
+------------------------------------------------------------------------------
+ USERS
+------------------------------------------------------------------------------
+  User          Roles                     Direct permissions
+  hana          HeadTeacher               {accounts.manage}
+  hugo          HeadTeacher               {}
+
+------------------------------------------------------------------------------
+ PERMISSION ASSIGNMENTS (effective permissions)
+------------------------------------------------------------------------------
+  hana
+      effective : {accounts.manage, attendance.mark, grades.edit, grades.view, logs.read}
+      allowed   : {attendance.mark, grades.edit, grades.view, logs.read}
+      forbidden : {accounts.manage, system.settings}
+      required  : {grades.edit, grades.view}
+  hugo
+      effective : {attendance.mark, grades.edit, grades.view, logs.read}
+      allowed   : {attendance.mark, grades.edit, grades.view, logs.read}
+      forbidden : {accounts.manage, system.settings}
+      required  : {grades.edit, grades.view}
+
+------------------------------------------------------------------------------
+ DETECTED SECURITY VIOLATIONS (most severe first)
+------------------------------------------------------------------------------
+   1. [CRITICAL] FORBIDDEN   user 'hana' holds forbidden permission 'accounts.manage' (via direct assignment)
+  Total: 1 finding(s)
+
+------------------------------------------------------------------------------
+ COMPLIANCE SCORE (0-100)
+------------------------------------------------------------------------------
+  Scoring: every user starts at 100; CRITICAL -25, HIGH -15, MEDIUM -8, LOW -3 per violation.
+
+  User            Violations  Before    After
+  hana            1           75        100
+  hugo            0           100       100
+
+  SYSTEM SCORE BEFORE: 87.5 / 100  [MODERATE RISK]
+  SYSTEM SCORE AFTER : 100.0 / 100  [SECURE]
+
+------------------------------------------------------------------------------
+ CANDIDATE REPAIR ACTIONS (sorted by cost)
+------------------------------------------------------------------------------
+  User 'hana': 1 candidate action(s)
+      - REVOKE permission 'accounts.manage' from user 'hana' (cost 5)
+
+------------------------------------------------------------------------------
+ MINIMUM-COST REPAIR SELECTION
+------------------------------------------------------------------------------
+  Search mode: backtracking with pruning
+
+  Candidate evaluation statistics (all users)
+      Candidate actions generated     : 1
+      Combinations in space (sum 2^n) : 2
+      Recursive calls (nodes visited) : 3
+      Combinations explored           : 1
+      Invalid combinations rejected   : 0
+      Valid combinations found        : 1
+      Branches pruned                 : 1
+
+  User 'hana'  (1 actions, 1 explored, 0 rejected, 1 valid)
+      [OK] Best solution (cost 5): REVOKE accounts.manage
+      #1 selected   cost 5 : REVOKE accounts.manage
+      Why it wins: it is the only valid combination that survived the search.
+
+  MINIMUM TOTAL REPAIR COST: 5
+
+------------------------------------------------------------------------------
+ PROPOSED REPAIR (not yet applied)
+------------------------------------------------------------------------------
+   1. REVOKE permission 'accounts.manage' from user 'hana' (cost 5)
+  Total cost: 5
+
+------------------------------------------------------------------------------
+ BEFORE / AFTER PERMISSION COMPARISON
+------------------------------------------------------------------------------
+  hana
+      before : {accounts.manage, attendance.mark, grades.edit, grades.view, logs.read}
+      after  : {attendance.mark, grades.edit, grades.view, logs.read}
+      change : - {accounts.manage}
+  hugo
+      before : {attendance.mark, grades.edit, grades.view, logs.read}
+      after  : {attendance.mark, grades.edit, grades.view, logs.read}
+      change : (none)
+
+------------------------------------------------------------------------------
+ POST-REPAIR VALIDATION
+------------------------------------------------------------------------------
+  [PASS] All forbidden permissions removed
+  [PASS] All required permissions preserved
+  [PASS] All allowed-permission rules satisfied
+  [PASS] Separation-of-duties rules satisfied
+  [PASS] No new violations introduced
+  [PASS] Legitimate access preserved (no collateral damage)
+  [PASS] No privilege escalation
+  [PASS] Remaining violations after repair: 0
+
+  FINAL SECURITY STATUS: [SECURE] repair validated
+
+==============================================================================
+  Scenario verdict: [PASS] matches expected behaviour

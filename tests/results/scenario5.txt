@@ -1,0 +1,131 @@
+
+SCENARIO 5: Impossible Repair (conflicting policy)
+  Role Auditor both REQUIRES and FORBIDS audit.export, and zara holds it.
+  Expected: Detect the conflict; every candidate is rejected; explain why no safe repair exists.
+==============================================================================
+                   PRIVILEGE TETRIS - SECURITY AUDIT REPORT
+==============================================================================
+
+------------------------------------------------------------------------------
+ SYSTEM CONFIGURATION
+------------------------------------------------------------------------------
+  Permissions in catalog : 8
+  Roles                  : 4
+  Users                  : 2
+  Cost model             : Weighted (revoke=1 x risk, grant=1 x risk, remove-role=2, add-role=2)
+  Search mode            : Backtracking WITH pruning
+
+  Permission catalog (risk weight 1-10 scales the cost of revoking/granting):
+    grades.view       risk 1  View student grades
+    grades.edit       risk 3  Edit student grades
+    accounts.manage   risk 5  Create/delete user accounts
+    system.settings   risk 5  Change system-wide settings
+    attendance.mark   risk 1  Mark class attendance
+    courses.enroll    risk 1  Enroll in courses
+    logs.read         risk 2  Read system logs
+    audit.export      risk 3  Export audit data
+
+  Separation-of-duties rules (a user may hold at most ONE of each set):
+    (none)
+
+------------------------------------------------------------------------------
+ ROLES AND THEIR POLICY RULES
+------------------------------------------------------------------------------
+  Role Student
+      grants    : {courses.enroll, grades.view}
+      allowed   : {courses.enroll, grades.view}
+      forbidden : {accounts.manage, attendance.mark, grades.edit, system.settings}
+      required  : {grades.view}
+  Role Teacher
+      grants    : {attendance.mark, grades.edit, grades.view}
+      allowed   : {attendance.mark, grades.edit, grades.view}
+      forbidden : {accounts.manage, system.settings}
+      required  : {grades.edit, grades.view}
+  Role Admin
+      grants    : {accounts.manage, grades.view, logs.read, system.settings}
+      allowed   : {accounts.manage, grades.view, logs.read, system.settings}
+      forbidden : {grades.edit}
+      required  : {accounts.manage}
+  Role Auditor
+      grants    : {audit.export, logs.read}
+      allowed   : {audit.export, logs.read}
+      forbidden : {audit.export}
+      required  : {audit.export, logs.read}
+
+------------------------------------------------------------------------------
+ USERS
+------------------------------------------------------------------------------
+  User          Roles                     Direct permissions
+  zara          Auditor                   {}
+  ann           Admin                     {}
+
+------------------------------------------------------------------------------
+ PERMISSION ASSIGNMENTS (effective permissions)
+------------------------------------------------------------------------------
+  zara
+      effective : {audit.export, logs.read}
+      allowed   : {audit.export, logs.read}
+      forbidden : {audit.export}
+      required  : {audit.export, logs.read}
+  ann
+      effective : {accounts.manage, grades.view, logs.read, system.settings}
+      allowed   : {accounts.manage, grades.view, logs.read, system.settings}
+      forbidden : {grades.edit}
+      required  : {accounts.manage}
+
+------------------------------------------------------------------------------
+ DETECTED SECURITY VIOLATIONS (most severe first)
+------------------------------------------------------------------------------
+   1. [CRITICAL] FORBIDDEN   user 'zara' holds forbidden permission 'audit.export' (via role Auditor)
+   2. [HIGH    ] ROLE-POLICY role 'Auditor' both REQUIRES and FORBIDS 'audit.export'
+   3. [HIGH    ] ROLE-POLICY role 'Auditor' grants forbidden 'audit.export'
+  Total: 3 finding(s)
+
+------------------------------------------------------------------------------
+ COMPLIANCE SCORE (0-100)
+------------------------------------------------------------------------------
+  Scoring: every user starts at 100; CRITICAL -25, HIGH -15, MEDIUM -8, LOW -3 per violation.
+
+  User            Violations  Before    
+  zara            1           75        
+  ann             0           100       
+
+  SYSTEM SCORE BEFORE: 87.5 / 100  [MODERATE RISK]
+
+------------------------------------------------------------------------------
+ CANDIDATE REPAIR ACTIONS (sorted by cost)
+------------------------------------------------------------------------------
+  User 'zara': 3 candidate action(s)
+      - REMOVE role 'Auditor' from user 'zara' (cost 2)
+      - GRANT permission 'logs.read' to user 'zara' (cost 2)
+      - ADD role 'Admin' to user 'zara' (cost 2)
+
+------------------------------------------------------------------------------
+ MINIMUM-COST REPAIR SELECTION
+------------------------------------------------------------------------------
+  Search mode: backtracking with pruning
+
+  Candidate evaluation statistics (all users)
+      Candidate actions generated     : 3
+      Combinations in space (sum 2^n) : 8
+      Recursive calls (nodes visited) : 15
+      Combinations explored           : 6
+      Invalid combinations rejected   : 6
+      Valid combinations found        : 0
+      Branches pruned                 : 2
+
+  User 'zara'  (3 actions, 6 explored, 6 rejected, 0 valid)
+      [FAIL] NO VALID REPAIR EXISTS
+  - Policy conflict: 'audit.export' is both REQUIRED and FORBIDDEN for this user, so no configuration can satisfy both.
+  - All 6 combinations of the 3 candidate actions were rejected:
+      * forbidden permission still held (2 candidate(s))
+      * legitimate access lost (1 candidate(s))
+      * new violation introduced (1 candidate(s))
+      * permission outside allowed set (1 candidate(s))
+      * privilege escalation (4 candidate(s))
+  - No safe repair exists; the configuration must be fixed manually.
+
+  MINIMUM TOTAL REPAIR COST: undefined (at least one user cannot be repaired safely)
+
+  FINAL SECURITY STATUS: [NOT SECURE] no safe repair exists
+  Scenario verdict: [PASS] matches expected behaviour

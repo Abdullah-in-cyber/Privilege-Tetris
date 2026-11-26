@@ -1,0 +1,167 @@
+
+SCENARIO 7: Separation of Duties Violation
+  'finn' holds Admin (accounts.manage) AND ComplianceOfficer (audit.export); rule SOD-ADMIN-AUDIT allows only one of them.
+  Expected: Detect the SoD conflict; remove role ComplianceOfficer (cost 2), keeping all of finn's admin access.
+==============================================================================
+                   PRIVILEGE TETRIS - SECURITY AUDIT REPORT
+==============================================================================
+
+------------------------------------------------------------------------------
+ SYSTEM CONFIGURATION
+------------------------------------------------------------------------------
+  Permissions in catalog : 8
+  Roles                  : 4
+  Users                  : 2
+  Cost model             : Weighted (revoke=1 x risk, grant=1 x risk, remove-role=2, add-role=2)
+  Search mode            : Backtracking WITH pruning
+
+  Permission catalog (risk weight 1-10 scales the cost of revoking/granting):
+    grades.view       risk 1  View student grades
+    grades.edit       risk 3  Edit student grades
+    accounts.manage   risk 5  Create/delete user accounts
+    system.settings   risk 5  Change system-wide settings
+    attendance.mark   risk 1  Mark class attendance
+    courses.enroll    risk 1  Enroll in courses
+    logs.read         risk 2  Read system logs
+    audit.export      risk 3  Export audit data
+
+  Separation-of-duties rules (a user may hold at most ONE of each set):
+    SOD-ADMIN-AUDIT     {accounts.manage, audit.export}
+
+------------------------------------------------------------------------------
+ ROLES AND THEIR POLICY RULES
+------------------------------------------------------------------------------
+  Role Student
+      grants    : {courses.enroll, grades.view}
+      allowed   : {courses.enroll, grades.view}
+      forbidden : {accounts.manage, attendance.mark, grades.edit, system.settings}
+      required  : {grades.view}
+  Role Teacher
+      grants    : {attendance.mark, grades.edit, grades.view}
+      allowed   : {attendance.mark, grades.edit, grades.view}
+      forbidden : {accounts.manage, system.settings}
+      required  : {grades.edit, grades.view}
+  Role Admin
+      grants    : {accounts.manage, grades.view, logs.read, system.settings}
+      allowed   : {accounts.manage, grades.view, logs.read, system.settings}
+      forbidden : {grades.edit}
+      required  : {accounts.manage}
+  Role ComplianceOfficer
+      grants    : {audit.export, logs.read}
+      allowed   : {audit.export, logs.read}
+      forbidden : {}
+      required  : {}
+
+------------------------------------------------------------------------------
+ USERS
+------------------------------------------------------------------------------
+  User          Roles                     Direct permissions
+  finn          Admin, ComplianceOfficer  {}
+  ann           Admin                     {}
+
+------------------------------------------------------------------------------
+ PERMISSION ASSIGNMENTS (effective permissions)
+------------------------------------------------------------------------------
+  finn
+      effective : {accounts.manage, audit.export, grades.view, logs.read, system.settings}
+      allowed   : {accounts.manage, audit.export, grades.view, logs.read, system.settings}
+      forbidden : {grades.edit}
+      required  : {accounts.manage}
+  ann
+      effective : {accounts.manage, grades.view, logs.read, system.settings}
+      allowed   : {accounts.manage, grades.view, logs.read, system.settings}
+      forbidden : {grades.edit}
+      required  : {accounts.manage}
+
+------------------------------------------------------------------------------
+ DETECTED SECURITY VIOLATIONS (most severe first)
+------------------------------------------------------------------------------
+   1. [CRITICAL] SOD         user 'finn' breaks separation-of-duties rule 'SOD-ADMIN-AUDIT': holds {accounts.manage, audit.export} together (at most one allowed)
+  Total: 1 finding(s)
+
+------------------------------------------------------------------------------
+ COMPLIANCE SCORE (0-100)
+------------------------------------------------------------------------------
+  Scoring: every user starts at 100; CRITICAL -25, HIGH -15, MEDIUM -8, LOW -3 per violation.
+
+  User            Violations  Before    After
+  finn            1           75        100
+  ann             0           100       100
+
+  SYSTEM SCORE BEFORE: 87.5 / 100  [MODERATE RISK]
+  SYSTEM SCORE AFTER : 100.0 / 100  [SECURE]
+
+------------------------------------------------------------------------------
+ CANDIDATE REPAIR ACTIONS (sorted by cost)
+------------------------------------------------------------------------------
+  User 'finn': 8 candidate action(s)
+      - GRANT permission 'grades.view' to user 'finn' (cost 1)
+      - REMOVE role 'Admin' from user 'finn' (cost 2)
+      - REMOVE role 'ComplianceOfficer' from user 'finn' (cost 2)
+      - ADD role 'Student' to user 'finn' (cost 2)
+      - GRANT permission 'logs.read' to user 'finn' (cost 2)
+      - GRANT permission 'audit.export' to user 'finn' (cost 3)
+      - GRANT permission 'accounts.manage' to user 'finn' (cost 5)
+      - GRANT permission 'system.settings' to user 'finn' (cost 5)
+
+------------------------------------------------------------------------------
+ MINIMUM-COST REPAIR SELECTION
+------------------------------------------------------------------------------
+  Search mode: backtracking with pruning
+
+  Candidate evaluation statistics (all users)
+      Candidate actions generated     : 8
+      Combinations in space (sum 2^n) : 256
+      Recursive calls (nodes visited) : 233
+      Combinations explored           : 93
+      Invalid combinations rejected   : 87
+      Valid combinations found        : 6
+      Branches pruned                 : 24
+
+  User 'finn'  (8 actions, 93 explored, 87 rejected, 6 valid)
+      [OK] Best solution (cost 2): REMOVE-ROLE ComplianceOfficer
+      #1 selected   cost 2 : REMOVE-ROLE ComplianceOfficer
+      alternative   cost 3 : GRANT grades.view + REMOVE-ROLE ComplianceOfficer
+      alternative   cost 5 : GRANT grades.view + REMOVE-ROLE ComplianceOfficer + GRANT logs.read
+      alternative   cost 10 : GRANT grades.view + REMOVE-ROLE ComplianceOfficer + GRANT logs.read + GRANT accounts.manage
+      alternative   cost 10 : GRANT grades.view + REMOVE-ROLE ComplianceOfficer + GRANT logs.read + GRANT system.settings
+      alternative   cost 15 : GRANT grades.view + REMOVE-ROLE ComplianceOfficer + GRANT logs.read + GRANT accounts.manage + GRANT system.settings
+      Why it wins: the cheapest OTHER valid solution seen costs 3 vs 2 (branches that could not beat the best cost were pruned, so they are not listed).
+      Rejections by reason: [forbidden permission still held x42] [legitimate access lost x43] [new violation introduced x81] [permission outside allowed set x71] [privilege escalation x50] [separation-of-duties rule still broken x38]
+
+  MINIMUM TOTAL REPAIR COST: 2
+
+------------------------------------------------------------------------------
+ PROPOSED REPAIR (not yet applied)
+------------------------------------------------------------------------------
+   1. REMOVE role 'ComplianceOfficer' from user 'finn' (cost 2)
+  Total cost: 2
+
+------------------------------------------------------------------------------
+ BEFORE / AFTER PERMISSION COMPARISON
+------------------------------------------------------------------------------
+  finn
+      before : {accounts.manage, audit.export, grades.view, logs.read, system.settings}
+      after  : {accounts.manage, grades.view, logs.read, system.settings}
+      change : - {audit.export}
+  ann
+      before : {accounts.manage, grades.view, logs.read, system.settings}
+      after  : {accounts.manage, grades.view, logs.read, system.settings}
+      change : (none)
+
+------------------------------------------------------------------------------
+ POST-REPAIR VALIDATION
+------------------------------------------------------------------------------
+  [PASS] All forbidden permissions removed
+  [PASS] All required permissions preserved
+  [PASS] All allowed-permission rules satisfied
+  [PASS] Separation-of-duties rules satisfied
+  [PASS] No new violations introduced
+  [PASS] Legitimate access preserved (no collateral damage)
+  [PASS] No privilege escalation
+  [PASS] Remaining violations after repair: 0
+
+  FINAL SECURITY STATUS: [SECURE] repair validated
+
+==============================================================================
+  Scenario verdict: [PASS] matches expected behaviour

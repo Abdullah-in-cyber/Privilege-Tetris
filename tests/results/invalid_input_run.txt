@@ -1,0 +1,254 @@
+==============================================================================
+               PRIVILEGE TETRIS - Minimum-Change Repair Engine
+==============================================================================
+  Loaded: Scenario 4 - Multiple Violations
+
+==================== MAIN MENU ====================
+  1. View System Configuration
+  2. View Users and Roles
+  3. View Permission Assignments
+  4. Run Security Audit (linear search)
+  5. Detect Permission Violations
+  6. Generate Repair Candidates
+  7. Find Minimum-Cost Repair (backtracking)
+  8. Simulate Repair (on a copy)
+  9. Validate Repaired Configuration
+ 10. View Audit Logs
+ 11. Generate Security Report
+ 12. Run Predefined Test Scenarios
+ 13. Apply Validated Repair to Live Configuration
+ 14. Edit Configuration (users / roles / permissions)
+ 15. Load / Save Configuration File
+ 16. Settings (cost model, pruning)
+ 17. Linear Search Demo
+  0. Exit
+===================================================
+Choose an option:   [!] Please enter a whole number between 0 and 17.
+Choose an option:   [!] Please enter a whole number between 0 and 17.
+Choose an option:   [!] Please enter a whole number between 0 and 17.
+Choose an option:   [!] Please enter a whole number between 0 and 17.
+Choose an option:   [!] Please enter a whole number between 0 and 17.
+Choose an option:   [!] Please enter a whole number between 0 and 17.
+Choose an option: 
+------------------------------------------------------------------------------
+ MINIMUM-COST REPAIR SELECTION
+------------------------------------------------------------------------------
+  Search mode: backtracking with pruning
+
+  Candidate evaluation statistics (all users)
+      Candidate actions generated     : 5
+      Combinations in space (sum 2^n) : 18
+      Recursive calls (nodes visited) : 26
+      Combinations explored           : 9
+      Invalid combinations rejected   : 6
+      Valid combinations found        : 3
+      Branches pruned                 : 5
+
+  User 'dave'  (4 actions, 8 explored, 6 rejected, 2 valid)
+      [OK] Best solution (cost 9): GRANT attendance.mark + REVOKE grades.edit + REVOKE accounts.manage
+      #1 selected   cost 9 : GRANT attendance.mark + REVOKE grades.edit + REVOKE accounts.manage
+      alternative   cost 11 : GRANT attendance.mark + ADD-ROLE AttendanceClerk + REVOKE grades.edit + REVOKE accounts.manage
+      Why it wins: the cheapest OTHER valid solution seen costs 11 vs 9 (branches that could not beat the best cost were pruned, so they are not listed).
+      Rejections by reason: [forbidden permission still held x6] [permission outside allowed set x6]
+
+  User 'eve'  (1 actions, 1 explored, 0 rejected, 1 valid)
+      [OK] Best solution (cost 3): REVOKE grades.edit
+      #1 selected   cost 3 : REVOKE grades.edit
+      Why it wins: it is the only valid combination that survived the search.
+
+  MINIMUM TOTAL REPAIR COST: 12
+
+==================== MAIN MENU ====================
+  1. View System Configuration
+  2. View Users and Roles
+  3. View Permission Assignments
+  4. Run Security Audit (linear search)
+  5. Detect Permission Violations
+  6. Generate Repair Candidates
+  7. Find Minimum-Cost Repair (backtracking)
+  8. Simulate Repair (on a copy)
+  9. Validate Repaired Configuration
+ 10. View Audit Logs
+ 11. Generate Security Report
+ 12. Run Predefined Test Scenarios
+ 13. Apply Validated Repair to Live Configuration
+ 14. Edit Configuration (users / roles / permissions)
+ 15. Load / Save Configuration File
+ 16. Settings (cost model, pruning)
+ 17. Linear Search Demo
+  0. Exit
+===================================================
+Choose an option:   [!] Please enter a whole number between 0 and 17.
+Choose an option:   [!] Please enter a whole number between 0 and 17.
+Choose an option: 
+  EDIT CONFIGURATION
+   1. Add permission        2. Add role            3. Add user
+   4. Give user a role      5. Remove user's role
+   6. Give user a direct permission   7. Revoke user's direct permission
+   8. Delete user           9. Clear everything (empty configuration)
+  10. Make a role inherit from another role (checks for cycles)
+  11. Add a separation-of-duties rule      0. Back
+  Choose:   [!] Please enter a whole number between 0 and 11.
+  Choose:   Permission id (e.g. reports.view):   [!] Use 1-40 characters: letters, digits, '.', '_' or '-' (no spaces).
+  Permission id (e.g. reports.view):   Description:   Risk weight 1 (harmless) to 10 (critical):   Added.
+
+  EDIT CONFIGURATION
+   1. Add permission        2. Add role            3. Add user
+   4. Give user a role      5. Remove user's role
+   6. Give user a direct permission   7. Revoke user's direct permission
+   8. Delete user           9. Clear everything (empty configuration)
+  10. Make a role inherit from another role (checks for cycles)
+  11. Add a separation-of-duties rule      0. Back
+  Choose:   [!] Please enter a whole number between 0 and 11.
+  Choose:   Role name:   grants permissions (space separated, blank = none):   [!] Unknown permission 'nonexistent.perm'. Role not created.
+
+  EDIT CONFIGURATION
+   1. Add permission        2. Add role            3. Add user
+   4. Give user a role      5. Remove user's role
+   6. Give user a direct permission   7. Revoke user's direct permission
+   8. Delete user           9. Clear everything (empty configuration)
+  10. Make a role inherit from another role (checks for cycles)
+  11. Add a separation-of-duties rule      0. Back
+  Choose:   User name:   [!] No such user.
+
+  EDIT CONFIGURATION
+   1. Add permission        2. Add role            3. Add user
+   4. Give user a role      5. Remove user's role
+   6. Give user a direct permission   7. Revoke user's direct permission
+   8. Delete user           9. Clear everything (empty configuration)
+  10. Make a role inherit from another role (checks for cycles)
+  11. Add a separation-of-duties rule      0. Back
+  Choose: 
+==================== MAIN MENU ====================
+  1. View System Configuration
+  2. View Users and Roles
+  3. View Permission Assignments
+  4. Run Security Audit (linear search)
+  5. Detect Permission Violations
+  6. Generate Repair Candidates
+  7. Find Minimum-Cost Repair (backtracking)
+  8. Simulate Repair (on a copy)
+  9. Validate Repaired Configuration
+ 10. View Audit Logs
+ 11. Generate Security Report
+ 12. Run Predefined Test Scenarios
+ 13. Apply Validated Repair to Live Configuration
+ 14. Edit Configuration (users / roles / permissions)
+ 15. Load / Save Configuration File
+ 16. Settings (cost model, pruning)
+ 17. Linear Search Demo
+  0. Exit
+===================================================
+Choose an option: 
+  1. Load configuration from file
+  2. Save current configuration to file
+  0. Back
+  Choose:   File path (e.g. data/scenario1.txt):   [!] Save failed: cannot write file 'data/../nonexistent_dir/x.txt'
+
+==================== MAIN MENU ====================
+  1. View System Configuration
+  2. View Users and Roles
+  3. View Permission Assignments
+  4. Run Security Audit (linear search)
+  5. Detect Permission Violations
+  6. Generate Repair Candidates
+  7. Find Minimum-Cost Repair (backtracking)
+  8. Simulate Repair (on a copy)
+  9. Validate Repaired Configuration
+ 10. View Audit Logs
+ 11. Generate Security Report
+ 12. Run Predefined Test Scenarios
+ 13. Apply Validated Repair to Live Configuration
+ 14. Edit Configuration (users / roles / permissions)
+ 15. Load / Save Configuration File
+ 16. Settings (cost model, pruning)
+ 17. Linear Search Demo
+  0. Exit
+===================================================
+Choose an option: 
+  1. Load configuration from file
+  2. Save current configuration to file
+  0. Back
+  Choose:   File path (e.g. data/scenario1.txt):   [!] Load failed: cannot open file 'no_such_file.txt'
+
+==================== MAIN MENU ====================
+  1. View System Configuration
+  2. View Users and Roles
+  3. View Permission Assignments
+  4. Run Security Audit (linear search)
+  5. Detect Permission Violations
+  6. Generate Repair Candidates
+  7. Find Minimum-Cost Repair (backtracking)
+  8. Simulate Repair (on a copy)
+  9. Validate Repaired Configuration
+ 10. View Audit Logs
+ 11. Generate Security Report
+ 12. Run Predefined Test Scenarios
+ 13. Apply Validated Repair to Live Configuration
+ 14. Edit Configuration (users / roles / permissions)
+ 15. Load / Save Configuration File
+ 16. Settings (cost model, pruning)
+ 17. Linear Search Demo
+  0. Exit
+===================================================
+Choose an option: 
+  1. Load configuration from file
+  2. Save current configuration to file
+  0. Back
+  Choose:   File path (e.g. data/scenario1.txt):   [!] No file name given.
+
+==================== MAIN MENU ====================
+  1. View System Configuration
+  2. View Users and Roles
+  3. View Permission Assignments
+  4. Run Security Audit (linear search)
+  5. Detect Permission Violations
+  6. Generate Repair Candidates
+  7. Find Minimum-Cost Repair (backtracking)
+  8. Simulate Repair (on a copy)
+  9. Validate Repaired Configuration
+ 10. View Audit Logs
+ 11. Generate Security Report
+ 12. Run Predefined Test Scenarios
+ 13. Apply Validated Repair to Live Configuration
+ 14. Edit Configuration (users / roles / permissions)
+ 15. Load / Save Configuration File
+ 16. Settings (cost model, pruning)
+ 17. Linear Search Demo
+  0. Exit
+===================================================
+Choose an option: 
+  SETTINGS
+  Cost model : Weighted (revoke=1 x risk, grant=1 x risk, remove-role=2, add-role=2)
+  Search     : backtracking with pruning
+   1. Toggle uniform / weighted cost
+   2. Set weights
+   3. Toggle pruning
+   0. Back
+  Choose:   [!] Please enter a whole number between 0 and 3.
+  Choose:   Cost of REVOKE (1-100):   [!] Please enter a whole number between 1 and 100.
+  Cost of REVOKE (1-100):   Cost of GRANT (1-100):   Cost of REMOVE-ROLE (1-100):   [!] Please enter a whole number between 1 and 100.
+  Cost of REMOVE-ROLE (1-100):   Cost of ADD-ROLE (1-100):   Now: Weighted (revoke=17 x risk, grant=1 x risk, remove-role=17, add-role=4); pruning ON
+
+==================== MAIN MENU ====================
+  1. View System Configuration
+  2. View Users and Roles
+  3. View Permission Assignments
+  4. Run Security Audit (linear search)
+  5. Detect Permission Violations
+  6. Generate Repair Candidates
+  7. Find Minimum-Cost Repair (backtracking)
+  8. Simulate Repair (on a copy)
+  9. Validate Repaired Configuration
+ 10. View Audit Logs
+ 11. Generate Security Report
+ 12. Run Predefined Test Scenarios
+ 13. Apply Validated Repair to Live Configuration
+ 14. Edit Configuration (users / roles / permissions)
+ 15. Load / Save Configuration File
+ 16. Settings (cost model, pruning)
+ 17. Linear Search Demo
+  0. Exit
+===================================================
+Choose an option:   [!] Please enter a whole number between 0 and 17.
+Choose an option: Goodbye.

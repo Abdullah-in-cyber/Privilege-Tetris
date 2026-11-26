@@ -1,0 +1,41 @@
+./tests/run_tests
+
+== DoublyLinkedList ==
+
+== PermissionSet (set operations) ==
+
+== Merge sort / linear search ==
+
+== Predefined scenarios (expected vs actual) ==
+
+== Optimality vs independent brute-force oracle ==
+
+== Safety properties ==
+
+== Cost model ==
+
+== Edge cases ==
+
+== Per-permission risk weights ==
+
+== Separation of duties ==
+
+== Role hierarchy (graph algorithms) ==
+
+== Compliance score ==
+
+== Randomized optimality vs oracle (seeded, 400 policies) ==
+  policies with violations: 354, users checked: 494 (unsolvable: 242, with SoD conflicts: 110)
+
+== Pruning vs brute force on a larger user (14 forbidden permissions) ==
+  brute force : nodes=32767 explored=16384 valid=1
+  backtracking: nodes=29 explored=1 valid=1 pruned=14
+
+== Config file parsing ==
+
+== Audit logger ==
+
+== Web API (HTTP-independent part) ==
+
+==============================
+Passed: 285   Failed: 0

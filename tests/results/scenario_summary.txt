@@ -1,0 +1,14 @@
+==============================================================================
+                         PREDEFINED SCENARIO RESULTS
+==============================================================================
+  #   Scenario                                Violations Min. cost            Score          Result
+  1   Student Excessive Privileges            1/1        3/3                  87.5->100.0    [PASS]
+  2   Teacher Administrative Privileges       1/1        5/5                  91.7->100.0    [PASS]
+  3   Missing Required Permissions            1/1        1/1                  96.0->100.0    [PASS]
+  4   Multiple Violations                     4/4        12/12                58.5->100.0    [PASS]
+  5   Impossible Repair (conflicting policy)  1/1        NO REPAIR/NO REPAIR  87.5->n/a      [PASS]
+  6   Already Secure System                   0/0        0/0                  100.0->100.0   [PASS]
+  7   Separation of Duties Violation          1/1        2/2                  87.5->100.0    [PASS]
+  8   Role Hierarchy (inherited rules)        1/1        5/5                  87.5->100.0    [PASS]
+
+  (Violations and Min. cost show actual/expected; Score = compliance before->after repair)  Mismatches: 0

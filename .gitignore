@@ -1,0 +1,7 @@
+build/
+privilege_tetris
+tests/run_tests
+security_report.txt
+
+# course document, not part of the code
+*.docx

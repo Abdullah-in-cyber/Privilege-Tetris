@@ -1,0 +1,579 @@
+==============================================================================
+               PRIVILEGE TETRIS - Minimum-Change Repair Engine
+==============================================================================
+  Loaded: Scenario 4 - Multiple Violations
+
+==================== MAIN MENU ====================
+  1. View System Configuration
+  2. View Users and Roles
+  3. View Permission Assignments
+  4. Run Security Audit (linear search)
+  5. Detect Permission Violations
+  6. Generate Repair Candidates
+  7. Find Minimum-Cost Repair (backtracking)
+  8. Simulate Repair (on a copy)
+  9. Validate Repaired Configuration
+ 10. View Audit Logs
+ 11. Generate Security Report
+ 12. Run Predefined Test Scenarios
+ 13. Apply Validated Repair to Live Configuration
+ 14. Edit Configuration (users / roles / permissions)
+ 15. Load / Save Configuration File
+ 16. Settings (cost model, pruning)
+ 17. Linear Search Demo
+  0. Exit
+===================================================
+Choose an option: 
+  EDIT CONFIGURATION
+   1. Add permission        2. Add role            3. Add user
+   4. Give user a role      5. Remove user's role
+   6. Give user a direct permission   7. Revoke user's direct permission
+   8. Delete user           9. Clear everything (empty configuration)
+  10. Make a role inherit from another role (checks for cycles)
+  11. Add a separation-of-duties rule      0. Back
+  Choose:   Role name:   grants permissions (space separated, blank = none):   [!] Unknown permission 'nonexistent.perm'. Role not created.
+
+  EDIT CONFIGURATION
+   1. Add permission        2. Add role            3. Add user
+   4. Give user a role      5. Remove user's role
+   6. Give user a direct permission   7. Revoke user's direct permission
+   8. Delete user           9. Clear everything (empty configuration)
+  10. Make a role inherit from another role (checks for cycles)
+  11. Add a separation-of-duties rule      0. Back
+  Choose:   User name:   Roles (space separated, blank = none):   [!] Unknown role 'ghost'. User not created.
+
+  EDIT CONFIGURATION
+   1. Add permission        2. Add role            3. Add user
+   4. Give user a role      5. Remove user's role
+   6. Give user a direct permission   7. Revoke user's direct permission
+   8. Delete user           9. Clear everything (empty configuration)
+  10. Make a role inherit from another role (checks for cycles)
+  11. Add a separation-of-duties rule      0. Back
+  Choose:   User name:   [!] No such user.
+
+  EDIT CONFIGURATION
+   1. Add permission        2. Add role            3. Add user
+   4. Give user a role      5. Remove user's role
+   6. Give user a direct permission   7. Revoke user's direct permission
+   8. Delete user           9. Clear everything (empty configuration)
+  10. Make a role inherit from another role (checks for cycles)
+  11. Add a separation-of-duties rule      0. Back
+  Choose: 
+==================== MAIN MENU ====================
+  1. View System Configuration
+  2. View Users and Roles
+  3. View Permission Assignments
+  4. Run Security Audit (linear search)
+  5. Detect Permission Violations
+  6. Generate Repair Candidates
+  7. Find Minimum-Cost Repair (backtracking)
+  8. Simulate Repair (on a copy)
+  9. Validate Repaired Configuration
+ 10. View Audit Logs
+ 11. Generate Security Report
+ 12. Run Predefined Test Scenarios
+ 13. Apply Validated Repair to Live Configuration
+ 14. Edit Configuration (users / roles / permissions)
+ 15. Load / Save Configuration File
+ 16. Settings (cost model, pruning)
+ 17. Linear Search Demo
+  0. Exit
+===================================================
+Choose an option: 
+  EDIT CONFIGURATION
+   1. Add permission        2. Add role            3. Add user
+   4. Give user a role      5. Remove user's role
+   6. Give user a direct permission   7. Revoke user's direct permission
+   8. Delete user           9. Clear everything (empty configuration)
+  10. Make a role inherit from another role (checks for cycles)
+  11. Add a separation-of-duties rule      0. Back
+  Choose:   Delete ALL permissions, roles and users? (y/n):   Configuration cleared.
+
+  EDIT CONFIGURATION
+   1. Add permission        2. Add role            3. Add user
+   4. Give user a role      5. Remove user's role
+   6. Give user a direct permission   7. Revoke user's direct permission
+   8. Delete user           9. Clear everything (empty configuration)
+  10. Make a role inherit from another role (checks for cycles)
+  11. Add a separation-of-duties rule      0. Back
+  Choose: 
+==================== MAIN MENU ====================
+  1. View System Configuration
+  2. View Users and Roles
+  3. View Permission Assignments
+  4. Run Security Audit (linear search)
+  5. Detect Permission Violations
+  6. Generate Repair Candidates
+  7. Find Minimum-Cost Repair (backtracking)
+  8. Simulate Repair (on a copy)
+  9. Validate Repaired Configuration
+ 10. View Audit Logs
+ 11. Generate Security Report
+ 12. Run Predefined Test Scenarios
+ 13. Apply Validated Repair to Live Configuration
+ 14. Edit Configuration (users / roles / permissions)
+ 15. Load / Save Configuration File
+ 16. Settings (cost model, pruning)
+ 17. Linear Search Demo
+  0. Exit
+===================================================
+Choose an option:   Current configuration: Empty configuration
+
+------------------------------------------------------------------------------
+ SYSTEM CONFIGURATION
+------------------------------------------------------------------------------
+  Permissions in catalog : 0
+  Roles                  : 0
+  Users                  : 0
+  Cost model             : Weighted (revoke=1 x risk, grant=1 x risk, remove-role=2, add-role=2)
+  Search mode            : Backtracking WITH pruning
+
+  Permission catalog (risk weight 1-10 scales the cost of revoking/granting):
+    (none)
+
+  Separation-of-duties rules (a user may hold at most ONE of each set):
+    (none)
+
+==================== MAIN MENU ====================
+  1. View System Configuration
+  2. View Users and Roles
+  3. View Permission Assignments
+  4. Run Security Audit (linear search)
+  5. Detect Permission Violations
+  6. Generate Repair Candidates
+  7. Find Minimum-Cost Repair (backtracking)
+  8. Simulate Repair (on a copy)
+  9. Validate Repaired Configuration
+ 10. View Audit Logs
+ 11. Generate Security Report
+ 12. Run Predefined Test Scenarios
+ 13. Apply Validated Repair to Live Configuration
+ 14. Edit Configuration (users / roles / permissions)
+ 15. Load / Save Configuration File
+ 16. Settings (cost model, pruning)
+ 17. Linear Search Demo
+  0. Exit
+===================================================
+Choose an option: 
+------------------------------------------------------------------------------
+ ROLES AND THEIR POLICY RULES
+------------------------------------------------------------------------------
+  (no roles defined)
+
+------------------------------------------------------------------------------
+ USERS
+------------------------------------------------------------------------------
+  (no users defined)
+
+==================== MAIN MENU ====================
+  1. View System Configuration
+  2. View Users and Roles
+  3. View Permission Assignments
+  4. Run Security Audit (linear search)
+  5. Detect Permission Violations
+  6. Generate Repair Candidates
+  7. Find Minimum-Cost Repair (backtracking)
+  8. Simulate Repair (on a copy)
+  9. Validate Repaired Configuration
+ 10. View Audit Logs
+ 11. Generate Security Report
+ 12. Run Predefined Test Scenarios
+ 13. Apply Validated Repair to Live Configuration
+ 14. Edit Configuration (users / roles / permissions)
+ 15. Load / Save Configuration File
+ 16. Settings (cost model, pruning)
+ 17. Linear Search Demo
+  0. Exit
+===================================================
+Choose an option: 
+------------------------------------------------------------------------------
+ PERMISSION ASSIGNMENTS (effective permissions)
+------------------------------------------------------------------------------
+  (no users defined)
+
+==================== MAIN MENU ====================
+  1. View System Configuration
+  2. View Users and Roles
+  3. View Permission Assignments
+  4. Run Security Audit (linear search)
+  5. Detect Permission Violations
+  6. Generate Repair Candidates
+  7. Find Minimum-Cost Repair (backtracking)
+  8. Simulate Repair (on a copy)
+  9. Validate Repaired Configuration
+ 10. View Audit Logs
+ 11. Generate Security Report
+ 12. Run Predefined Test Scenarios
+ 13. Apply Validated Repair to Live Configuration
+ 14. Edit Configuration (users / roles / permissions)
+ 15. Load / Save Configuration File
+ 16. Settings (cost model, pruning)
+ 17. Linear Search Demo
+  0. Exit
+===================================================
+Choose an option: 
+------------------------------------------------------------------------------
+ SECURITY AUDIT - privilege matrix (linear search)
+------------------------------------------------------------------------------
+  Nothing to audit: need at least one user and one permission.
+
+==================== MAIN MENU ====================
+  1. View System Configuration
+  2. View Users and Roles
+  3. View Permission Assignments
+  4. Run Security Audit (linear search)
+  5. Detect Permission Violations
+  6. Generate Repair Candidates
+  7. Find Minimum-Cost Repair (backtracking)
+  8. Simulate Repair (on a copy)
+  9. Validate Repaired Configuration
+ 10. View Audit Logs
+ 11. Generate Security Report
+ 12. Run Predefined Test Scenarios
+ 13. Apply Validated Repair to Live Configuration
+ 14. Edit Configuration (users / roles / permissions)
+ 15. Load / Save Configuration File
+ 16. Settings (cost model, pruning)
+ 17. Linear Search Demo
+  0. Exit
+===================================================
+Choose an option: 
+------------------------------------------------------------------------------
+ DETECTED SECURITY VIOLATIONS (most severe first)
+------------------------------------------------------------------------------
+  [OK] No violations detected.
+
+------------------------------------------------------------------------------
+ COMPLIANCE SCORE (0-100)
+------------------------------------------------------------------------------
+  Scoring: every user starts at 100; CRITICAL -25, HIGH -15, MEDIUM -8, LOW -3 per violation.
+
+  User            Violations  Before    
+
+  SYSTEM SCORE BEFORE: 100.0 / 100  [SECURE]
+
+==================== MAIN MENU ====================
+  1. View System Configuration
+  2. View Users and Roles
+  3. View Permission Assignments
+  4. Run Security Audit (linear search)
+  5. Detect Permission Violations
+  6. Generate Repair Candidates
+  7. Find Minimum-Cost Repair (backtracking)
+  8. Simulate Repair (on a copy)
+  9. Validate Repaired Configuration
+ 10. View Audit Logs
+ 11. Generate Security Report
+ 12. Run Predefined Test Scenarios
+ 13. Apply Validated Repair to Live Configuration
+ 14. Edit Configuration (users / roles / permissions)
+ 15. Load / Save Configuration File
+ 16. Settings (cost model, pruning)
+ 17. Linear Search Demo
+  0. Exit
+===================================================
+Choose an option: 
+------------------------------------------------------------------------------
+ CANDIDATE REPAIR ACTIONS (sorted by cost)
+------------------------------------------------------------------------------
+  No repairs needed.
+
+==================== MAIN MENU ====================
+  1. View System Configuration
+  2. View Users and Roles
+  3. View Permission Assignments
+  4. Run Security Audit (linear search)
+  5. Detect Permission Violations
+  6. Generate Repair Candidates
+  7. Find Minimum-Cost Repair (backtracking)
+  8. Simulate Repair (on a copy)
+  9. Validate Repaired Configuration
+ 10. View Audit Logs
+ 11. Generate Security Report
+ 12. Run Predefined Test Scenarios
+ 13. Apply Validated Repair to Live Configuration
+ 14. Edit Configuration (users / roles / permissions)
+ 15. Load / Save Configuration File
+ 16. Settings (cost model, pruning)
+ 17. Linear Search Demo
+  0. Exit
+===================================================
+Choose an option: 
+------------------------------------------------------------------------------
+ MINIMUM-COST REPAIR SELECTION
+------------------------------------------------------------------------------
+  Search mode: backtracking with pruning
+  No violations -> nothing to repair. Minimum repair cost: 0
+
+==================== MAIN MENU ====================
+  1. View System Configuration
+  2. View Users and Roles
+  3. View Permission Assignments
+  4. Run Security Audit (linear search)
+  5. Detect Permission Violations
+  6. Generate Repair Candidates
+  7. Find Minimum-Cost Repair (backtracking)
+  8. Simulate Repair (on a copy)
+  9. Validate Repaired Configuration
+ 10. View Audit Logs
+ 11. Generate Security Report
+ 12. Run Predefined Test Scenarios
+ 13. Apply Validated Repair to Live Configuration
+ 14. Edit Configuration (users / roles / permissions)
+ 15. Load / Save Configuration File
+ 16. Settings (cost model, pruning)
+ 17. Linear Search Demo
+  0. Exit
+===================================================
+Choose an option: 
+------------------------------------------------------------------------------
+ PROPOSED REPAIR (not yet applied)
+------------------------------------------------------------------------------
+  (no changes)
+
+------------------------------------------------------------------------------
+ BEFORE / AFTER PERMISSION COMPARISON
+------------------------------------------------------------------------------
+  (no users)
+
+  The LIVE configuration has NOT been modified. Use option 9 to validate the simulation.
+
+==================== MAIN MENU ====================
+  1. View System Configuration
+  2. View Users and Roles
+  3. View Permission Assignments
+  4. Run Security Audit (linear search)
+  5. Detect Permission Violations
+  6. Generate Repair Candidates
+  7. Find Minimum-Cost Repair (backtracking)
+  8. Simulate Repair (on a copy)
+  9. Validate Repaired Configuration
+ 10. View Audit Logs
+ 11. Generate Security Report
+ 12. Run Predefined Test Scenarios
+ 13. Apply Validated Repair to Live Configuration
+ 14. Edit Configuration (users / roles / permissions)
+ 15. Load / Save Configuration File
+ 16. Settings (cost model, pruning)
+ 17. Linear Search Demo
+  0. Exit
+===================================================
+Choose an option: 
+------------------------------------------------------------------------------
+ POST-REPAIR VALIDATION
+------------------------------------------------------------------------------
+  [PASS] All forbidden permissions removed
+  [PASS] All required permissions preserved
+  [PASS] All allowed-permission rules satisfied
+  [PASS] Separation-of-duties rules satisfied
+  [PASS] No new violations introduced
+  [PASS] Legitimate access preserved (no collateral damage)
+  [PASS] No privilege escalation
+  [PASS] Remaining violations after repair: 0
+
+  FINAL SECURITY STATUS: [SECURE] repair validated
+
+==================== MAIN MENU ====================
+  1. View System Configuration
+  2. View Users and Roles
+  3. View Permission Assignments
+  4. Run Security Audit (linear search)
+  5. Detect Permission Violations
+  6. Generate Repair Candidates
+  7. Find Minimum-Cost Repair (backtracking)
+  8. Simulate Repair (on a copy)
+  9. Validate Repaired Configuration
+ 10. View Audit Logs
+ 11. Generate Security Report
+ 12. Run Predefined Test Scenarios
+ 13. Apply Validated Repair to Live Configuration
+ 14. Edit Configuration (users / roles / permissions)
+ 15. Load / Save Configuration File
+ 16. Settings (cost model, pruning)
+ 17. Linear Search Demo
+  0. Exit
+===================================================
+Choose an option: 
+------------------------------------------------------------------------------
+ PROPOSED REPAIR (not yet applied)
+------------------------------------------------------------------------------
+  (no changes)
+
+------------------------------------------------------------------------------
+ POST-REPAIR VALIDATION
+------------------------------------------------------------------------------
+  [PASS] All forbidden permissions removed
+  [PASS] All required permissions preserved
+  [PASS] All allowed-permission rules satisfied
+  [PASS] Separation-of-duties rules satisfied
+  [PASS] No new violations introduced
+  [PASS] Legitimate access preserved (no collateral damage)
+  [PASS] No privilege escalation
+  [PASS] Remaining violations after repair: 0
+
+  FINAL SECURITY STATUS: [SECURE] repair validated
+  Nothing to apply: the system is already secure.
+
+==================== MAIN MENU ====================
+  1. View System Configuration
+  2. View Users and Roles
+  3. View Permission Assignments
+  4. Run Security Audit (linear search)
+  5. Detect Permission Violations
+  6. Generate Repair Candidates
+  7. Find Minimum-Cost Repair (backtracking)
+  8. Simulate Repair (on a copy)
+  9. Validate Repaired Configuration
+ 10. View Audit Logs
+ 11. Generate Security Report
+ 12. Run Predefined Test Scenarios
+ 13. Apply Validated Repair to Live Configuration
+ 14. Edit Configuration (users / roles / permissions)
+ 15. Load / Save Configuration File
+ 16. Settings (cost model, pruning)
+ 17. Linear Search Demo
+  0. Exit
+===================================================
+Choose an option: ==============================================================================
+                   PRIVILEGE TETRIS - SECURITY AUDIT REPORT
+==============================================================================
+
+------------------------------------------------------------------------------
+ SYSTEM CONFIGURATION
+------------------------------------------------------------------------------
+  Permissions in catalog : 0
+  Roles                  : 0
+  Users                  : 0
+  Cost model             : Weighted (revoke=1 x risk, grant=1 x risk, remove-role=2, add-role=2)
+  Search mode            : Backtracking WITH pruning
+
+  Permission catalog (risk weight 1-10 scales the cost of revoking/granting):
+    (none)
+
+  Separation-of-duties rules (a user may hold at most ONE of each set):
+    (none)
+
+------------------------------------------------------------------------------
+ ROLES AND THEIR POLICY RULES
+------------------------------------------------------------------------------
+  (no roles defined)
+
+------------------------------------------------------------------------------
+ USERS
+------------------------------------------------------------------------------
+  (no users defined)
+
+------------------------------------------------------------------------------
+ PERMISSION ASSIGNMENTS (effective permissions)
+------------------------------------------------------------------------------
+  (no users defined)
+
+------------------------------------------------------------------------------
+ DETECTED SECURITY VIOLATIONS (most severe first)
+------------------------------------------------------------------------------
+  [OK] No violations detected.
+
+------------------------------------------------------------------------------
+ COMPLIANCE SCORE (0-100)
+------------------------------------------------------------------------------
+  Scoring: every user starts at 100; CRITICAL -25, HIGH -15, MEDIUM -8, LOW -3 per violation.
+
+  User            Violations  Before    After
+
+  SYSTEM SCORE BEFORE: 100.0 / 100  [SECURE]
+  SYSTEM SCORE AFTER : 100.0 / 100  [SECURE]
+
+------------------------------------------------------------------------------
+ CANDIDATE REPAIR ACTIONS (sorted by cost)
+------------------------------------------------------------------------------
+  No repairs needed.
+
+------------------------------------------------------------------------------
+ MINIMUM-COST REPAIR SELECTION
+------------------------------------------------------------------------------
+  Search mode: backtracking with pruning
+  No violations -> nothing to repair. Minimum repair cost: 0
+
+------------------------------------------------------------------------------
+ PROPOSED REPAIR (not yet applied)
+------------------------------------------------------------------------------
+  (no changes)
+
+------------------------------------------------------------------------------
+ BEFORE / AFTER PERMISSION COMPARISON
+------------------------------------------------------------------------------
+  (no users)
+
+------------------------------------------------------------------------------
+ POST-REPAIR VALIDATION
+------------------------------------------------------------------------------
+  [PASS] All forbidden permissions removed
+  [PASS] All required permissions preserved
+  [PASS] All allowed-permission rules satisfied
+  [PASS] Separation-of-duties rules satisfied
+  [PASS] No new violations introduced
+  [PASS] Legitimate access preserved (no collateral damage)
+  [PASS] No privilege escalation
+  [PASS] Remaining violations after repair: 0
+
+  FINAL SECURITY STATUS: [SECURE] repair validated
+
+==============================================================================
+Save this report to a text file? (y/n): 
+==================== MAIN MENU ====================
+  1. View System Configuration
+  2. View Users and Roles
+  3. View Permission Assignments
+  4. Run Security Audit (linear search)
+  5. Detect Permission Violations
+  6. Generate Repair Candidates
+  7. Find Minimum-Cost Repair (backtracking)
+  8. Simulate Repair (on a copy)
+  9. Validate Repaired Configuration
+ 10. View Audit Logs
+ 11. Generate Security Report
+ 12. Run Predefined Test Scenarios
+ 13. Apply Validated Repair to Live Configuration
+ 14. Edit Configuration (users / roles / permissions)
+ 15. Load / Save Configuration File
+ 16. Settings (cost model, pruning)
+ 17. Linear Search Demo
+  0. Exit
+===================================================
+Choose an option: 
+  AUDIT LOG MENU  (12 entries, stored in a custom linked list)
+   1. View all entries
+   2. View one category
+   3. Search by keyword (linear search)
+   4. Delete all entries of a category
+   0. Back
+  Choose:   Keyword:   0 match(es); 12 node(s) examined.
+
+  AUDIT LOG MENU  (12 entries, stored in a custom linked list)
+   1. View all entries
+   2. View one category
+   3. Search by keyword (linear search)
+   4. Delete all entries of a category
+   0. Back
+  Choose: 
+==================== MAIN MENU ====================
+  1. View System Configuration
+  2. View Users and Roles
+  3. View Permission Assignments
+  4. Run Security Audit (linear search)
+  5. Detect Permission Violations
+  6. Generate Repair Candidates
+  7. Find Minimum-Cost Repair (backtracking)
+  8. Simulate Repair (on a copy)
+  9. Validate Repaired Configuration
+ 10. View Audit Logs
+ 11. Generate Security Report
+ 12. Run Predefined Test Scenarios
+ 13. Apply Validated Repair to Live Configuration
+ 14. Edit Configuration (users / roles / permissions)
+ 15. Load / Save Configuration File
+ 16. Settings (cost model, pruning)
+ 17. Linear Search Demo
+  0. Exit
+===================================================
+Choose an option: Goodbye.

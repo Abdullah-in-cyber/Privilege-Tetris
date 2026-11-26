@@ -1,0 +1,53 @@
+# Privilege Tetris configuration
+permission grades.view | View student grades
+permission grades.edit risk=3 | Edit student grades
+permission accounts.manage risk=5 | Create/delete user accounts
+permission system.settings risk=5 | Change system-wide settings
+permission attendance.mark | Mark class attendance
+permission courses.enroll | Enroll in courses
+permission logs.read risk=2 | Read system logs
+permission audit.export risk=3 | Export audit data
+permission reports.view risk=7 | Report viewer
+sod S1 accounts.manage reports.view
+
+role Student
+  grants    courses.enroll grades.view
+  allowed   courses.enroll grades.view
+  forbidden accounts.manage attendance.mark grades.edit system.settings
+  required  grades.view
+
+role Teacher
+  grants    attendance.mark grades.edit grades.view
+  allowed   attendance.mark grades.edit grades.view
+  forbidden accounts.manage system.settings
+  required  grades.edit grades.view
+
+role Assistant
+  grants    grades.view
+  allowed   attendance.mark grades.view
+  forbidden accounts.manage grades.edit system.settings
+  required  attendance.mark grades.view
+
+role AttendanceClerk
+  grants    attendance.mark
+  allowed   attendance.mark
+
+role Admin
+  inherits Student
+  grants    accounts.manage grades.view logs.read system.settings
+  allowed   accounts.manage grades.view logs.read system.settings
+  forbidden grades.edit
+  required  accounts.manage
+
+role Dean
+  inherits Teacher
+  grants    reports.view
+  allowed   reports.view
+
+user dave
+  roles  Assistant
+  direct    accounts.manage grades.edit
+
+user eve
+  roles  Student
+  direct    grades.edit

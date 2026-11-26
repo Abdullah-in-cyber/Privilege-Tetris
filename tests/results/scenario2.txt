@@ -1,0 +1,160 @@
+
+SCENARIO 2: Teacher Administrative Privileges
+  Teacher 'tom' also holds accounts.manage, an administrative right.
+  Expected: Revoke accounts.manage only; tom keeps grades.view/edit and attendance (cost 5 = revoke 1 x risk 5).
+==============================================================================
+                   PRIVILEGE TETRIS - SECURITY AUDIT REPORT
+==============================================================================
+
+------------------------------------------------------------------------------
+ SYSTEM CONFIGURATION
+------------------------------------------------------------------------------
+  Permissions in catalog : 8
+  Roles                  : 3
+  Users                  : 3
+  Cost model             : Weighted (revoke=1 x risk, grant=1 x risk, remove-role=2, add-role=2)
+  Search mode            : Backtracking WITH pruning
+
+  Permission catalog (risk weight 1-10 scales the cost of revoking/granting):
+    grades.view       risk 1  View student grades
+    grades.edit       risk 3  Edit student grades
+    accounts.manage   risk 5  Create/delete user accounts
+    system.settings   risk 5  Change system-wide settings
+    attendance.mark   risk 1  Mark class attendance
+    courses.enroll    risk 1  Enroll in courses
+    logs.read         risk 2  Read system logs
+    audit.export      risk 3  Export audit data
+
+  Separation-of-duties rules (a user may hold at most ONE of each set):
+    (none)
+
+------------------------------------------------------------------------------
+ ROLES AND THEIR POLICY RULES
+------------------------------------------------------------------------------
+  Role Student
+      grants    : {courses.enroll, grades.view}
+      allowed   : {courses.enroll, grades.view}
+      forbidden : {accounts.manage, attendance.mark, grades.edit, system.settings}
+      required  : {grades.view}
+  Role Teacher
+      grants    : {attendance.mark, grades.edit, grades.view}
+      allowed   : {attendance.mark, grades.edit, grades.view}
+      forbidden : {accounts.manage, system.settings}
+      required  : {grades.edit, grades.view}
+  Role Admin
+      grants    : {accounts.manage, grades.view, logs.read, system.settings}
+      allowed   : {accounts.manage, grades.view, logs.read, system.settings}
+      forbidden : {grades.edit}
+      required  : {accounts.manage}
+
+------------------------------------------------------------------------------
+ USERS
+------------------------------------------------------------------------------
+  User          Roles                     Direct permissions
+  tom           Teacher                   {accounts.manage}
+  lisa          Teacher                   {}
+  ann           Admin                     {}
+
+------------------------------------------------------------------------------
+ PERMISSION ASSIGNMENTS (effective permissions)
+------------------------------------------------------------------------------
+  tom
+      effective : {accounts.manage, attendance.mark, grades.edit, grades.view}
+      allowed   : {attendance.mark, grades.edit, grades.view}
+      forbidden : {accounts.manage, system.settings}
+      required  : {grades.edit, grades.view}
+  lisa
+      effective : {attendance.mark, grades.edit, grades.view}
+      allowed   : {attendance.mark, grades.edit, grades.view}
+      forbidden : {accounts.manage, system.settings}
+      required  : {grades.edit, grades.view}
+  ann
+      effective : {accounts.manage, grades.view, logs.read, system.settings}
+      allowed   : {accounts.manage, grades.view, logs.read, system.settings}
+      forbidden : {grades.edit}
+      required  : {accounts.manage}
+
+------------------------------------------------------------------------------
+ DETECTED SECURITY VIOLATIONS (most severe first)
+------------------------------------------------------------------------------
+   1. [CRITICAL] FORBIDDEN   user 'tom' holds forbidden permission 'accounts.manage' (via direct assignment)
+  Total: 1 finding(s)
+
+------------------------------------------------------------------------------
+ COMPLIANCE SCORE (0-100)
+------------------------------------------------------------------------------
+  Scoring: every user starts at 100; CRITICAL -25, HIGH -15, MEDIUM -8, LOW -3 per violation.
+
+  User            Violations  Before    After
+  tom             1           75        100
+  lisa            0           100       100
+  ann             0           100       100
+
+  SYSTEM SCORE BEFORE: 91.7 / 100  [LOW RISK]
+  SYSTEM SCORE AFTER : 100.0 / 100  [SECURE]
+
+------------------------------------------------------------------------------
+ CANDIDATE REPAIR ACTIONS (sorted by cost)
+------------------------------------------------------------------------------
+  User 'tom': 1 candidate action(s)
+      - REVOKE permission 'accounts.manage' from user 'tom' (cost 5)
+
+------------------------------------------------------------------------------
+ MINIMUM-COST REPAIR SELECTION
+------------------------------------------------------------------------------
+  Search mode: backtracking with pruning
+
+  Candidate evaluation statistics (all users)
+      Candidate actions generated     : 1
+      Combinations in space (sum 2^n) : 2
+      Recursive calls (nodes visited) : 3
+      Combinations explored           : 1
+      Invalid combinations rejected   : 0
+      Valid combinations found        : 1
+      Branches pruned                 : 1
+
+  User 'tom'  (1 actions, 1 explored, 0 rejected, 1 valid)
+      [OK] Best solution (cost 5): REVOKE accounts.manage
+      #1 selected   cost 5 : REVOKE accounts.manage
+      Why it wins: it is the only valid combination that survived the search.
+
+  MINIMUM TOTAL REPAIR COST: 5
+
+------------------------------------------------------------------------------
+ PROPOSED REPAIR (not yet applied)
+------------------------------------------------------------------------------
+   1. REVOKE permission 'accounts.manage' from user 'tom' (cost 5)
+  Total cost: 5
+
+------------------------------------------------------------------------------
+ BEFORE / AFTER PERMISSION COMPARISON
+------------------------------------------------------------------------------
+  tom
+      before : {accounts.manage, attendance.mark, grades.edit, grades.view}
+      after  : {attendance.mark, grades.edit, grades.view}
+      change : - {accounts.manage}
+  lisa
+      before : {attendance.mark, grades.edit, grades.view}
+      after  : {attendance.mark, grades.edit, grades.view}
+      change : (none)
+  ann
+      before : {accounts.manage, grades.view, logs.read, system.settings}
+      after  : {accounts.manage, grades.view, logs.read, system.settings}
+      change : (none)
+
+------------------------------------------------------------------------------
+ POST-REPAIR VALIDATION
+------------------------------------------------------------------------------
+  [PASS] All forbidden permissions removed
+  [PASS] All required permissions preserved
+  [PASS] All allowed-permission rules satisfied
+  [PASS] Separation-of-duties rules satisfied
+  [PASS] No new violations introduced
+  [PASS] Legitimate access preserved (no collateral damage)
+  [PASS] No privilege escalation
+  [PASS] Remaining violations after repair: 0
+
+  FINAL SECURITY STATUS: [SECURE] repair validated
+
+==============================================================================
+  Scenario verdict: [PASS] matches expected behaviour

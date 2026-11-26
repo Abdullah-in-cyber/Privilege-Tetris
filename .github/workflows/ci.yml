@@ -1,0 +1,70 @@
+# Continuous integration for Privilege Tetris.
+# Runs on every push and pull request. Nothing here needs secrets or paid services.
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:      # lets you start it by hand from the Actions tab
+
+jobs:
+  build-and-test:
+    name: Build + tests (${{ matrix.compiler }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler: [g++, clang++]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Show compiler version
+        run: ${{ matrix.compiler }} --version
+
+      - name: Build the application
+        run: make CXX=${{ matrix.compiler }}
+
+      - name: Run the automated test suite
+        run: make CXX=${{ matrix.compiler }} test
+
+      - name: Run all predefined scenarios (exits non-zero if any result differs from expected)
+        run: ./privilege_tetris --scenarios
+
+      - name: Scripted menu sessions (invalid input, empty configuration, new features) must exit cleanly
+        run: |
+          for script in tests/inputs/*.txt; do
+            echo "== $script"
+            ./privilege_tetris < "$script" > /dev/null
+          done
+
+      - name: Web UI server smoke test (real HTTP requests)
+        run: sh tests/web_smoke.sh
+
+      - name: Generate the report of every scenario
+        if: matrix.compiler == 'g++'
+        run: |
+          mkdir -p scenario-reports
+          for n in 1 2 3 4 5 6 7 8; do ./privilege_tetris --run "$n" > "scenario-reports/scenario$n.txt"; done
+
+      - name: Keep the reports as a downloadable artifact
+        if: matrix.compiler == 'g++'
+        uses: actions/upload-artifact@v4
+        with:
+          name: scenario-reports
+          path: scenario-reports/
+
+  sanitizers:
+    name: AddressSanitizer + UBSan (leaks, memory errors, undefined behaviour)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build and run tests under sanitizers
+        run: make asan
+      - name: Scripted menu sessions under sanitizers
+        run: |
+          for script in tests/inputs/*.txt; do
+            echo "== $script"
+            ./privilege_tetris < "$script" > /dev/null
+          done

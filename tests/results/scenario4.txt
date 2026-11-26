@@ -1,0 +1,179 @@
+
+SCENARIO 4: Multiple Violations
+  'dave' (Assistant) holds two forbidden permissions AND lacks a required one; 'eve' is an over-privileged student.
+  Expected: Explore many combinations; dave: revoke accounts.manage 5 + revoke grades.edit 3 + grant attendance.mark 1 = 9; eve: revoke grades.edit 3; total 12.
+==============================================================================
+                   PRIVILEGE TETRIS - SECURITY AUDIT REPORT
+==============================================================================
+
+------------------------------------------------------------------------------
+ SYSTEM CONFIGURATION
+------------------------------------------------------------------------------
+  Permissions in catalog : 8
+  Roles                  : 5
+  Users                  : 2
+  Cost model             : Weighted (revoke=1 x risk, grant=1 x risk, remove-role=2, add-role=2)
+  Search mode            : Backtracking WITH pruning
+
+  Permission catalog (risk weight 1-10 scales the cost of revoking/granting):
+    grades.view       risk 1  View student grades
+    grades.edit       risk 3  Edit student grades
+    accounts.manage   risk 5  Create/delete user accounts
+    system.settings   risk 5  Change system-wide settings
+    attendance.mark   risk 1  Mark class attendance
+    courses.enroll    risk 1  Enroll in courses
+    logs.read         risk 2  Read system logs
+    audit.export      risk 3  Export audit data
+
+  Separation-of-duties rules (a user may hold at most ONE of each set):
+    (none)
+
+------------------------------------------------------------------------------
+ ROLES AND THEIR POLICY RULES
+------------------------------------------------------------------------------
+  Role Student
+      grants    : {courses.enroll, grades.view}
+      allowed   : {courses.enroll, grades.view}
+      forbidden : {accounts.manage, attendance.mark, grades.edit, system.settings}
+      required  : {grades.view}
+  Role Teacher
+      grants    : {attendance.mark, grades.edit, grades.view}
+      allowed   : {attendance.mark, grades.edit, grades.view}
+      forbidden : {accounts.manage, system.settings}
+      required  : {grades.edit, grades.view}
+  Role Admin
+      grants    : {accounts.manage, grades.view, logs.read, system.settings}
+      allowed   : {accounts.manage, grades.view, logs.read, system.settings}
+      forbidden : {grades.edit}
+      required  : {accounts.manage}
+  Role Assistant
+      grants    : {grades.view}
+      allowed   : {attendance.mark, grades.view}
+      forbidden : {accounts.manage, grades.edit, system.settings}
+      required  : {attendance.mark, grades.view}
+  Role AttendanceClerk
+      grants    : {attendance.mark}
+      allowed   : {attendance.mark}
+      forbidden : {}
+      required  : {}
+
+------------------------------------------------------------------------------
+ USERS
+------------------------------------------------------------------------------
+  User          Roles                     Direct permissions
+  dave          Assistant                 {accounts.manage, grades.edit}
+  eve           Student                   {grades.edit}
+
+------------------------------------------------------------------------------
+ PERMISSION ASSIGNMENTS (effective permissions)
+------------------------------------------------------------------------------
+  dave
+      effective : {accounts.manage, grades.edit, grades.view}
+      allowed   : {attendance.mark, grades.view}
+      forbidden : {accounts.manage, grades.edit, system.settings}
+      required  : {attendance.mark, grades.view}
+  eve
+      effective : {courses.enroll, grades.edit, grades.view}
+      allowed   : {courses.enroll, grades.view}
+      forbidden : {accounts.manage, attendance.mark, grades.edit, system.settings}
+      required  : {grades.view}
+
+------------------------------------------------------------------------------
+ DETECTED SECURITY VIOLATIONS (most severe first)
+------------------------------------------------------------------------------
+   1. [CRITICAL] FORBIDDEN   user 'dave' holds forbidden permission 'accounts.manage' (via direct assignment)
+   2. [CRITICAL] FORBIDDEN   user 'dave' holds forbidden permission 'grades.edit' (via direct assignment)
+   3. [CRITICAL] FORBIDDEN   user 'eve' holds forbidden permission 'grades.edit' (via direct assignment)
+   4. [HIGH    ] ROLE-POLICY role 'Assistant' requires but does not grant 'attendance.mark'
+   5. [MEDIUM  ] MISSING     user 'dave' is missing required permission 'attendance.mark'
+  Total: 5 finding(s)
+
+------------------------------------------------------------------------------
+ COMPLIANCE SCORE (0-100)
+------------------------------------------------------------------------------
+  Scoring: every user starts at 100; CRITICAL -25, HIGH -15, MEDIUM -8, LOW -3 per violation.
+
+  User            Violations  Before    After
+  dave            3           42        100
+  eve             1           75        100
+
+  SYSTEM SCORE BEFORE: 58.5 / 100  [HIGH RISK]
+  SYSTEM SCORE AFTER : 100.0 / 100  [SECURE]
+
+------------------------------------------------------------------------------
+ CANDIDATE REPAIR ACTIONS (sorted by cost)
+------------------------------------------------------------------------------
+  User 'dave': 4 candidate action(s)
+      - GRANT permission 'attendance.mark' to user 'dave' (cost 1)
+      - ADD role 'AttendanceClerk' to user 'dave' (cost 2)
+      - REVOKE permission 'grades.edit' from user 'dave' (cost 3)
+      - REVOKE permission 'accounts.manage' from user 'dave' (cost 5)
+  User 'eve': 1 candidate action(s)
+      - REVOKE permission 'grades.edit' from user 'eve' (cost 3)
+
+------------------------------------------------------------------------------
+ MINIMUM-COST REPAIR SELECTION
+------------------------------------------------------------------------------
+  Search mode: backtracking with pruning
+
+  Candidate evaluation statistics (all users)
+      Candidate actions generated     : 5
+      Combinations in space (sum 2^n) : 18
+      Recursive calls (nodes visited) : 26
+      Combinations explored           : 9
+      Invalid combinations rejected   : 6
+      Valid combinations found        : 3
+      Branches pruned                 : 5
+
+  User 'dave'  (4 actions, 8 explored, 6 rejected, 2 valid)
+      [OK] Best solution (cost 9): GRANT attendance.mark + REVOKE grades.edit + REVOKE accounts.manage
+      #1 selected   cost 9 : GRANT attendance.mark + REVOKE grades.edit + REVOKE accounts.manage
+      alternative   cost 11 : GRANT attendance.mark + ADD-ROLE AttendanceClerk + REVOKE grades.edit + REVOKE accounts.manage
+      Why it wins: the cheapest OTHER valid solution seen costs 11 vs 9 (branches that could not beat the best cost were pruned, so they are not listed).
+      Rejections by reason: [forbidden permission still held x6] [permission outside allowed set x6]
+
+  User 'eve'  (1 actions, 1 explored, 0 rejected, 1 valid)
+      [OK] Best solution (cost 3): REVOKE grades.edit
+      #1 selected   cost 3 : REVOKE grades.edit
+      Why it wins: it is the only valid combination that survived the search.
+
+  MINIMUM TOTAL REPAIR COST: 12
+
+------------------------------------------------------------------------------
+ PROPOSED REPAIR (not yet applied)
+------------------------------------------------------------------------------
+   1. GRANT permission 'attendance.mark' to user 'dave' (cost 1)
+   2. REVOKE permission 'grades.edit' from user 'dave' (cost 3)
+   3. REVOKE permission 'accounts.manage' from user 'dave' (cost 5)
+   4. REVOKE permission 'grades.edit' from user 'eve' (cost 3)
+  Total cost: 12
+
+------------------------------------------------------------------------------
+ BEFORE / AFTER PERMISSION COMPARISON
+------------------------------------------------------------------------------
+  dave
+      before : {accounts.manage, grades.edit, grades.view}
+      after  : {attendance.mark, grades.view}
+      change : - {accounts.manage, grades.edit}
+      change : + {attendance.mark}
+  eve
+      before : {courses.enroll, grades.edit, grades.view}
+      after  : {courses.enroll, grades.view}
+      change : - {grades.edit}
+
+------------------------------------------------------------------------------
+ POST-REPAIR VALIDATION
+------------------------------------------------------------------------------
+  [PASS] All forbidden permissions removed
+  [PASS] All required permissions preserved
+  [PASS] All allowed-permission rules satisfied
+  [PASS] Separation-of-duties rules satisfied
+  [PASS] No new violations introduced
+  [PASS] Legitimate access preserved (no collateral damage)
+  [PASS] No privilege escalation
+  [PASS] Remaining violations after repair: 0
+
+  FINAL SECURITY STATUS: [SECURE] repair validated
+
+==============================================================================
+  Scenario verdict: [PASS] matches expected behaviour

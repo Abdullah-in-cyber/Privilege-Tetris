@@ -1,0 +1,230 @@
+==============================================================================
+               PRIVILEGE TETRIS - Minimum-Change Repair Engine
+==============================================================================
+  Loaded: Scenario 4 - Multiple Violations
+
+==================== MAIN MENU ====================
+  1. View System Configuration
+  2. View Users and Roles
+  3. View Permission Assignments
+  4. Run Security Audit (linear search)
+  5. Detect Permission Violations
+  6. Generate Repair Candidates
+  7. Find Minimum-Cost Repair (backtracking)
+  8. Simulate Repair (on a copy)
+  9. Validate Repaired Configuration
+ 10. View Audit Logs
+ 11. Generate Security Report
+ 12. Run Predefined Test Scenarios
+ 13. Apply Validated Repair to Live Configuration
+ 14. Edit Configuration (users / roles / permissions)
+ 15. Load / Save Configuration File
+ 16. Settings (cost model, pruning)
+ 17. Linear Search Demo
+  0. Exit
+===================================================
+Choose an option: 
+------------------------------------------------------------------------------
+ PROPOSED REPAIR (not yet applied)
+------------------------------------------------------------------------------
+   1. GRANT permission 'attendance.mark' to user 'dave' (cost 1)
+   2. REVOKE permission 'grades.edit' from user 'dave' (cost 3)
+   3. REVOKE permission 'accounts.manage' from user 'dave' (cost 5)
+   4. REVOKE permission 'grades.edit' from user 'eve' (cost 3)
+  Total cost: 12
+
+------------------------------------------------------------------------------
+ BEFORE / AFTER PERMISSION COMPARISON
+------------------------------------------------------------------------------
+  dave
+      before : {accounts.manage, grades.edit, grades.view}
+      after  : {attendance.mark, grades.view}
+      change : - {accounts.manage, grades.edit}
+      change : + {attendance.mark}
+  eve
+      before : {courses.enroll, grades.edit, grades.view}
+      after  : {courses.enroll, grades.view}
+      change : - {grades.edit}
+
+  The LIVE configuration has NOT been modified. Use option 9 to validate the simulation.
+
+==================== MAIN MENU ====================
+  1. View System Configuration
+  2. View Users and Roles
+  3. View Permission Assignments
+  4. Run Security Audit (linear search)
+  5. Detect Permission Violations
+  6. Generate Repair Candidates
+  7. Find Minimum-Cost Repair (backtracking)
+  8. Simulate Repair (on a copy)
+  9. Validate Repaired Configuration
+ 10. View Audit Logs
+ 11. Generate Security Report
+ 12. Run Predefined Test Scenarios
+ 13. Apply Validated Repair to Live Configuration
+ 14. Edit Configuration (users / roles / permissions)
+ 15. Load / Save Configuration File
+ 16. Settings (cost model, pruning)
+ 17. Linear Search Demo
+  0. Exit
+===================================================
+Choose an option: 
+------------------------------------------------------------------------------
+ PROPOSED REPAIR (not yet applied)
+------------------------------------------------------------------------------
+   1. GRANT permission 'attendance.mark' to user 'dave' (cost 1)
+   2. REVOKE permission 'grades.edit' from user 'dave' (cost 3)
+   3. REVOKE permission 'accounts.manage' from user 'dave' (cost 5)
+   4. REVOKE permission 'grades.edit' from user 'eve' (cost 3)
+  Total cost: 12
+
+------------------------------------------------------------------------------
+ POST-REPAIR VALIDATION
+------------------------------------------------------------------------------
+  [PASS] All forbidden permissions removed
+  [PASS] All required permissions preserved
+  [PASS] All allowed-permission rules satisfied
+  [PASS] Separation-of-duties rules satisfied
+  [PASS] No new violations introduced
+  [PASS] Legitimate access preserved (no collateral damage)
+  [PASS] No privilege escalation
+  [PASS] Remaining violations after repair: 0
+
+  FINAL SECURITY STATUS: [SECURE] repair validated
+
+Apply this repair to the live configuration? (y/n):   [OK] Repair applied to the live configuration.
+
+==================== MAIN MENU ====================
+  1. View System Configuration
+  2. View Users and Roles
+  3. View Permission Assignments
+  4. Run Security Audit (linear search)
+  5. Detect Permission Violations
+  6. Generate Repair Candidates
+  7. Find Minimum-Cost Repair (backtracking)
+  8. Simulate Repair (on a copy)
+  9. Validate Repaired Configuration
+ 10. View Audit Logs
+ 11. Generate Security Report
+ 12. Run Predefined Test Scenarios
+ 13. Apply Validated Repair to Live Configuration
+ 14. Edit Configuration (users / roles / permissions)
+ 15. Load / Save Configuration File
+ 16. Settings (cost model, pruning)
+ 17. Linear Search Demo
+  0. Exit
+===================================================
+Choose an option: 
+------------------------------------------------------------------------------
+ DETECTED SECURITY VIOLATIONS (most severe first)
+------------------------------------------------------------------------------
+   1. [HIGH    ] ROLE-POLICY role 'Assistant' requires but does not grant 'attendance.mark'
+  Total: 1 finding(s)
+
+------------------------------------------------------------------------------
+ COMPLIANCE SCORE (0-100)
+------------------------------------------------------------------------------
+  Scoring: every user starts at 100; CRITICAL -25, HIGH -15, MEDIUM -8, LOW -3 per violation.
+
+  User            Violations  Before    
+  dave            0           100       
+  eve             0           100       
+
+  SYSTEM SCORE BEFORE: 100.0 / 100  [SECURE]
+
+==================== MAIN MENU ====================
+  1. View System Configuration
+  2. View Users and Roles
+  3. View Permission Assignments
+  4. Run Security Audit (linear search)
+  5. Detect Permission Violations
+  6. Generate Repair Candidates
+  7. Find Minimum-Cost Repair (backtracking)
+  8. Simulate Repair (on a copy)
+  9. Validate Repaired Configuration
+ 10. View Audit Logs
+ 11. Generate Security Report
+ 12. Run Predefined Test Scenarios
+ 13. Apply Validated Repair to Live Configuration
+ 14. Edit Configuration (users / roles / permissions)
+ 15. Load / Save Configuration File
+ 16. Settings (cost model, pruning)
+ 17. Linear Search Demo
+  0. Exit
+===================================================
+Choose an option: 
+  AUDIT LOG MENU  (36 entries, stored in a custom linked list)
+   1. View all entries
+   2. View one category
+   3. Search by keyword (linear search)
+   4. Delete all entries of a category
+   0. Back
+  Choose: 
+------------------------------------------------------------------------------
+ AUDIT LOG
+------------------------------------------------------------------------------
+  #001  [INFO       ] Session started with scenario: Scenario 4 - Multiple Violations
+  #002  [VIOLATION  ] CRITICAL FORBIDDEN: user 'dave' holds forbidden permission 'accounts.manage' (via direct assignment)
+  #003  [VIOLATION  ] CRITICAL FORBIDDEN: user 'dave' holds forbidden permission 'grades.edit' (via direct assignment)
+  #004  [VIOLATION  ] CRITICAL FORBIDDEN: user 'eve' holds forbidden permission 'grades.edit' (via direct assignment)
+  #005  [VIOLATION  ] HIGH ROLE-POLICY: role 'Assistant' requires but does not grant 'attendance.mark'
+  #006  [VIOLATION  ] MEDIUM MISSING: user 'dave' is missing required permission 'attendance.mark'
+  #007  [INFO       ] Violation detection finished: 5 finding(s); compliance score 59/100 [HIGH RISK]
+  #008  [ACTION     ] Candidate generated: GRANT permission 'attendance.mark' to user 'dave' (cost 1)
+  #009  [ACTION     ] Candidate generated: ADD role 'AttendanceClerk' to user 'dave' (cost 2)
+  #010  [ACTION     ] Candidate generated: REVOKE permission 'grades.edit' from user 'dave' (cost 3)
+  #011  [ACTION     ] Candidate generated: REVOKE permission 'accounts.manage' from user 'dave' (cost 5)
+  #012  [EXPLORATION] User 'dave': 8 combinations explored, 6 rejected, 2 valid, 4 branches pruned
+  #013  [SELECTION  ] User 'dave': best repair cost 9 -> GRANT permission 'attendance.mark' to user 'dave' (cost 1); REVOKE permission 'grades.edit' from user 'dave' (cost 3); REVOKE permission 'accounts.manage' from user 'dave' (cost 5)
+  #014  [ACTION     ] Candidate generated: REVOKE permission 'grades.edit' from user 'eve' (cost 3)
+  #015  [EXPLORATION] User 'eve': 1 combinations explored, 0 rejected, 1 valid, 1 branches pruned
+  #016  [SELECTION  ] User 'eve': best repair cost 3 -> REVOKE permission 'grades.edit' from user 'eve' (cost 3)
+  #017  [SELECTION  ] Minimum total repair cost = 12
+  #018  [EXECUTION  ] [SIMULATED] GRANT permission 'attendance.mark' to user 'dave' (cost 1)
+  #019  [EXECUTION  ] [SIMULATED] REVOKE permission 'grades.edit' from user 'dave' (cost 3)
+  #020  [EXECUTION  ] [SIMULATED] REVOKE permission 'accounts.manage' from user 'dave' (cost 5)
+  #021  [EXECUTION  ] [SIMULATED] REVOKE permission 'grades.edit' from user 'eve' (cost 3)
+  #022  [VALIDATION ] PASS: All forbidden permissions removed
+  #023  [VALIDATION ] PASS: All required permissions preserved
+  #024  [VALIDATION ] PASS: All allowed-permission rules satisfied
+  #025  [VALIDATION ] PASS: Separation-of-duties rules satisfied
+  #026  [VALIDATION ] PASS: No new violations introduced
+  #027  [VALIDATION ] PASS: Legitimate access preserved (no collateral damage)
+  #028  [VALIDATION ] PASS: No privilege escalation
+  #029  [VALIDATION ] Repair validated: configuration is secure
+  #030  [EXECUTION  ] [APPLIED] GRANT permission 'attendance.mark' to user 'dave' (cost 1)
+  #031  [EXECUTION  ] [APPLIED] REVOKE permission 'grades.edit' from user 'dave' (cost 3)
+  #032  [EXECUTION  ] [APPLIED] REVOKE permission 'accounts.manage' from user 'dave' (cost 5)
+  #033  [EXECUTION  ] [APPLIED] REVOKE permission 'grades.edit' from user 'eve' (cost 3)
+  #034  [EXECUTION  ] Repair applied; total cost 12
+  #035  [VIOLATION  ] HIGH ROLE-POLICY: role 'Assistant' requires but does not grant 'attendance.mark'
+  #036  [INFO       ] Violation detection finished: 1 finding(s); compliance score 100/100 [SECURE]
+
+  AUDIT LOG MENU  (36 entries, stored in a custom linked list)
+   1. View all entries
+   2. View one category
+   3. Search by keyword (linear search)
+   4. Delete all entries of a category
+   0. Back
+  Choose: 
+==================== MAIN MENU ====================
+  1. View System Configuration
+  2. View Users and Roles
+  3. View Permission Assignments
+  4. Run Security Audit (linear search)
+  5. Detect Permission Violations
+  6. Generate Repair Candidates
+  7. Find Minimum-Cost Repair (backtracking)
+  8. Simulate Repair (on a copy)
+  9. Validate Repaired Configuration
+ 10. View Audit Logs
+ 11. Generate Security Report
+ 12. Run Predefined Test Scenarios
+ 13. Apply Validated Repair to Live Configuration
+ 14. Edit Configuration (users / roles / permissions)
+ 15. Load / Save Configuration File
+ 16. Settings (cost model, pruning)
+ 17. Linear Search Demo
+  0. Exit
+===================================================
+Choose an option: Goodbye.

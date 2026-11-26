@@ -1,0 +1,43 @@
+abc
+-5
+99
+
+3.7
+1 2
+7
+n
+y
+14
+99
+1
+bad name!
+reports.view
+Reports viewer
+1
+reports.view
+2
+newrole
+nonexistent.perm
+5
+ghost
+0
+15
+2
+data/../nonexistent_dir/x.txt
+15
+1
+no_such_file.txt
+15
+1
+
+16
+9
+2
+0
+17
+1
+zzz
+17
+4
+dave
+0
